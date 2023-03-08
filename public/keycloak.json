@@ -1,6 +1,6 @@
 {
   "realm": "me-fit",
-  "auth-server-url": "https://mefit-frontend.vercel.app/auth",
+  "auth-server-url": "https://mefit-frontend.vercel.app/",
   "ssl-required": "external",
   "resource": "react-client",
   "public-client": true,
