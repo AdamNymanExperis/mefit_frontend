@@ -1,6 +1,6 @@
 {
-  "realm": "noroff",
-  "auth-server-url": "https://acc-keycloak.herokuapp.com/auth/",
+  "realm": "me-fit",
+  "auth-server-url": "https://mefit-frontend.vercel.app/auth",
   "ssl-required": "external",
   "resource": "react-client",
   "public-client": true,
