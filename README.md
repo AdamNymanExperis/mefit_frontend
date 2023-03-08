@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# React with Keycloak starter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> ## NB: Remember to replace the contents of the `public/keycloak.json` file with your own Keycloak server configuration
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Background](#background)
+- [Install](#install)
+- [Usage](#install)
+- [Keycloak Configuration](#keycloak-configuration)
+- [Keycloak JavaScript Adapter](#keycloak-javascript-adapter)
+- [Axios Interceptor](#axios-interceptor)
+- [Custom Hooks](#custom-hooks)
+- [Dependencies](#dependencies)
+- [Authors](#authors)
+- [License](#license)
 
-### `npm start`
+## Background
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This repository provides a starting point for candidates choosing to use React with Keycloak. The
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Install
 
-### `npm test`
+Using npm
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```sh
+npm install
+# Install the project dependencies
+```
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+npm start
+# Start the React server
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Keycloak Configuration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After setting up your Keycloak server, you **must** copy the JSON configuration from the Admin panel. Replace the content in the `public/keycloak.json` file before you start.
 
-### `npm run eject`
+![Keycloak Config](./keycloak-config.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Keycloak JavaScript Adapter
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The [keycloak-js](https://www.npmjs.com/package/keycloak-js) library exposes the [Keycloak JavaScript Adapter](https://github.com/keycloak/keycloak-documentation/blob/main/securing_apps/topics/oidc/javascript-adapter.adoc#javascript-adapter-reference) which provides properties and methods to manage the existing Keycloak session on the client. Follow the link to the [Keycloak documentation](https://github.com/keycloak/keycloak-documentation/blob/main/securing_apps/topics/oidc/javascript-adapter.adoc#javascript-adapter-reference) for more detail on the Adapter API.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Keycloak - Protected Routes (Roles)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Keycloak provides the ability to setup roles for users. The KeycloakRoute Higher Order Component.
 
-## Learn More
+```jsx
+/* File: src/App.jsx
+ * Add a Protected Route using React Router 6.x */
+<Routes>
+    <Routes path="/profile" 
+        element={ 
+            <KeycloakRoute role="USER">
+                <ProfilePage />
+            </KeycloakRoute> 
+        }
+    />
+</Routes>
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+// File: routes/KeycloakRoute.jsx
+import { Navigate } from "react-router-dom";
+import keycloak from "../keycloak";
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function KeycloakRoute({ children, role, redirectTo = "/" }) {
+  
+  if (!keycloak.authenticated) {
+    return <Navigate replace to={redirectTo} />;
+  }
 
-### Code Splitting
+  if (keycloak.hasRealmRole(role)) {
+    return <>{children}</>;
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  return <Navigate replace to={redirectTo} />;
+}
 
-### Analyzing the Bundle Size
+export default KeycloakRoute;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Axios Interceptor
 
-### Making a Progressive Web App
+The custom [Axios request interceptor](https://axios-http.com/docs/interceptors) automatically attaches the existing Auth Token from the Keycloak library to every request as an Authorization header using the [Bearer Token](https://oauth.net/2/bearer-tokens/) pattern.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Custom hooks
 
-### Advanced Configuration
+This project uses custom hooks to make code more re-usable. All hooks can be found in the `./src/hooks/` folder of the project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### `useProducts`
 
-### Deployment
+Make an HTTP request using axios to a local server. Provides the products and an optional error message as properties on an object.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> Note: The repository uses a mock server that does not exist. You should replace the URL with your own server's endpoint.
 
-### `npm run build` fails to minify
+## Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [keycloak-js](https://www.npmjs.com/package/keycloak-js)
+- [axios](https://github.com/axios/axios)
+
+## Authors
+
+- [@dewald-els](https://github.com/dewald-els)
+
+## License
+
+[MIT](./LICENSE.md)

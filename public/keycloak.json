@@ -1,0 +1,8 @@
+{
+  "realm": "noroff",
+  "auth-server-url": "https://acc-keycloak.herokuapp.com/auth/",
+  "ssl-required": "external",
+  "resource": "react-client",
+  "public-client": true,
+  "confidential-port": 0
+}
