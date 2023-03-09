@@ -1,6 +1,16 @@
 import keycloak from "../keycloak";
+import { useEffect } from "react";
+import { getUser } from "../api/user"; 
 
 function ProfilePage() {
+
+  useEffect( () => {
+    const pingBackend = async() => {
+      const data = await getUser(keycloak.token) 
+      console.log(data)
+    }
+    pingBackend()
+  }, [])
 
   return (
     <div>
