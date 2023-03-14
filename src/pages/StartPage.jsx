@@ -1,5 +1,5 @@
 import keycloak from "../keycloak";
-
+import Exercise from "../components/exercise/exercise";
 /**
  * Example Start Page using Keycloak Context.
  */
@@ -7,7 +7,7 @@ function StartPage() {
   return (
     <div>
       <h1>Start Page</h1>
-
+      <Exercise />
       <section className="actions">
         {!keycloak.authenticated && (
           <button onClick={() => keycloak.login()}>Login</button>
