@@ -1,7 +1,7 @@
 const apiUrl = process.env.REACT_APP_API_URL
 
 export const getExercises = async (token) => {
-    const response = await fetch(`${apiUrl}/Exercises`, {
+    const response = await fetch(`${apiUrl}/exercises`, {
       headers: { Authorization: `Bearer  ${token}` },
     })
     try {
