@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getImpairmentFromURL } from "../../api/impairment";
 
 const ImpairmentListItem = ({impairmentURL}) => {
-
     const [impairment, setImpairment] = useState({})
     useEffect( () => {
       const callApiForImpairment = async() => {

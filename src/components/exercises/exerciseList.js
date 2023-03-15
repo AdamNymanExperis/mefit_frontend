@@ -1,6 +1,7 @@
 import { getExercises } from "../../api/exercise";
 import { useEffect, useState } from "react";
 import ImpairmentListItem from "../impairments/impairmentListItem";
+import { Card, Stack, Grid } from '@mui/material';
 
 const ExerciseList = () => {
 
@@ -15,46 +16,37 @@ const ExerciseList = () => {
   
   const [selected, setSelected] = useState(null);
 
-  return <div>
-    <div>{exercises.map((exercise, index) => (
-      <div key={index}>
-        <div onClick={() => setSelected(index)}>
-          <p>{exercise.name}</p>
-          <p>Target Muscle Group: {exercise.targetMuscleGroup}</p>
-
-          { selected == index &&
-            <div>
-              <p>{exercise.description}</p>
-              { exercise.impairments.length > 0 && 
-                <p>This exercise could generally also be practised by people with the following impairments:</p>
+  return <>
+    <Grid container  spacing={2}>
+      {exercises.map((exercise, index) => (
+        <Grid margin={3} key={index} xs={3}>
+          <Card >
+            <Stack margin={2} onClick={() => setSelected(index)} height="140">
+              <img alt="" src={exercise.imageLink} height="150"></img>
+              <p>{exercise.name}</p>
+              <p>Target Muscle Group: {exercise.targetMuscleGroup}</p>
+            </Stack>
+            <Stack margin={2}>
+              { selected === index &&
+                <div>
+                  <p>{exercise.description}</p>
+                  { exercise.impairments.length > 0 && 
+                    <p>This exercise could generally also be practised by people with the following impairments:</p>
+                  }
+                  <ul>{exercise.impairments.map((impairment, index) => (
+                    <ImpairmentListItem key={index} impairmentURL={impairment}/> 
+                  ))}</ul>
+                  { exercise.videoLink !== "" && 
+                    <a href={exercise.videoLink}>Click here for video!</a>
+                  }
+                </div>
               }
-              <ul>{exercise.impairments.map((impairment, index) => (
-                <ImpairmentListItem key={index} impairmentURL={impairment}/> 
-              ))}</ul>
-              <p>{exercise.videoLink}</p>
-            </div>
-          }
-        </div>
-      </div>
-    ))}</div>      
-  </div> 
+            </Stack>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>      
+  </> 
 }
-
-/*{ selected == index ?
-          <div>
-            <p>{exercise.name}</p>
-            <p>Target Muscle Group: {exercise.targetMuscleGroup}</p>
-            <p>{exercise.description}</p>
-            <p>This exercise could generally also be done by people with the following impairments.</p>
-            <ul>{exercise.impairments.map((impairment, index) => (
-              <ImpairmentListItem key={index} impairmentURL={impairment}/> 
-            ))}</ul>
-            <p>{exercise.videoLink}</p>
-          </div> : 
-          <div onClick={() => setSelected(index)}>
-            <p>{exercise.name}</p>
-            <p>Target Muscle Group: {exercise.targetMuscleGroup}</p>
-          </div>
-        }*/ 
 
 export default ExerciseList;
