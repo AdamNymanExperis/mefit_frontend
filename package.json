@@ -5,7 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.11.12",
+    "@mui/material": "^5.11.13",
     "@mui/icons-material": "^5.11.11",
     "@react-keycloak/web": "^3.4.0",
     "@testing-library/jest-dom": "^5.16.4",
