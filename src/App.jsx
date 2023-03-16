@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Goal from "./pages/GoalDashboard";
 import StartPage from "./pages/StartPage";
 import EditProductPage from "./pages/EditProductPage";
 import ProductsPage from "./pages/ProductsPage";
@@ -6,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/navbar/Navbar";
 import KeycloakRoute from "./routes/KeycloakRoute";
 import { ROLES } from "./const/roles";
+import GoalDashboard from "./pages/GoalDashboard";
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
           <Route path="/" element={<StartPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:productId" element={<EditProductPage />} />
+          <Route path="/goaldashboard" element={<GoalDashboard />} />
           <Route
             path="/profile"
             element={
