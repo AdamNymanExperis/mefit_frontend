@@ -17,7 +17,7 @@ const ExerciseList = () => {
   const [selected, setSelected] = useState(null);
 
   return <>
-    <Grid container  spacing={2}>
+    <Grid container spacing={2}>
       {exercises.map((exercise, index) => (
         <Grid margin={3} key={index} xs={3}>
           <Card >

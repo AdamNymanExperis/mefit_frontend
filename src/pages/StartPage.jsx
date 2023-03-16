@@ -1,5 +1,6 @@
 import keycloak from "../keycloak";
 import allGoalChecklists from "../components/goals/allGoalChecklists";
+import ExerciseList from "../components/exercises/exerciseList"
 /**
  * Example Start Page using Keycloak Context.
  */
@@ -8,6 +9,7 @@ function StartPage() {
     <div>
       <h1>Start Page</h1>
       <allGoalChecklists/>
+      <ExerciseList/>
       <section className="actions">
         {!keycloak.authenticated && (
           <button onClick={() => keycloak.login()}>Login</button>
