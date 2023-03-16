@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import {
   Drawer,
@@ -7,21 +7,26 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
-import ProfileIcon from '@mui/icons-material/AccountBox';
-import GoalIcon from '@mui/icons-material/Flag';
-import WorkoutIcon from '@mui/icons-material/FitnessCenter';
-import ExerciseIcon from '@mui/icons-material/SportsFootball';
-import HandshakeIcon from '@mui/icons-material/Handshake';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import MenuIcon from "@mui/icons-material/Menu";
-import keycloak from "../../keycloak";
+} from "@mui/material"
+import ProfileIcon from "@mui/icons-material/AccountBox"
+import GoalIcon from "@mui/icons-material/Flag"
+import WorkoutIcon from "@mui/icons-material/FitnessCenter"
+import ExerciseIcon from "@mui/icons-material/SportsFootball"
+import HandshakeIcon from "@mui/icons-material/Handshake"
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
+import MenuIcon from "@mui/icons-material/Menu"
+import keycloak from "../../keycloak"
 
-const pages = ["Profile", "Goal", "Workout", "Exercise"];
-const listIcon = [<ProfileIcon/>, <GoalIcon/>, <WorkoutIcon/>, <ExerciseIcon/>];
-const routes = ["/Profile", "/Goal" , "/Workout" , "/Exercise"]
+const pages = ["Profile", "Goal", "Workout", "Exercise"]
+const listIcon = [
+  <ProfileIcon />,
+  <GoalIcon />,
+  <WorkoutIcon />,
+  <ExerciseIcon />,
+]
+const routes = ["/Profile", "/Goal", "/Workout", "/Exercise"]
 const DrawerComponent = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false)
 
   return (
     <React.Fragment>
@@ -30,47 +35,55 @@ const DrawerComponent = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <List sx={{width: 300}}>
+        <List sx={{ width: 300 }}>
           {pages.map((page, index) => (
-            <ListItemButton key={index} component={Link} to={routes[index]}
-            onClick={() => setOpenDrawer(false)}>
+            <ListItemButton
+              key={index}
+              component={Link}
+              to={routes[index]}
+              onClick={() => setOpenDrawer(false)}
+            >
               <ListItemIcon>
                 {listIcon[index]}
                 <ListItemText>{page}</ListItemText>
               </ListItemIcon>
             </ListItemButton>
           ))}
-          
-          {keycloak.tokenParsed.roles.includes("CONTRIBUTOR") &&
-            <ListItemButton 
-            component={Link} to={"/contributor"}
-              onClick={() => setOpenDrawer(false)}>
+
+          {keycloak.tokenParsed.roles.includes("CONTRIBUTOR") && (
+            <ListItemButton
+              component={Link}
+              to={"/contributor"}
+              onClick={() => setOpenDrawer(false)}
+            >
               <ListItemIcon>
-                <HandshakeIcon/>
+                <HandshakeIcon />
                 <ListItemText>Contributor</ListItemText>
               </ListItemIcon>
             </ListItemButton>
-          }
-          {keycloak.tokenParsed.roles.includes("ADMIN") &&
-            <ListItemButton 
-            component={Link} to={"/admin"}
-              onClick={() => setOpenDrawer(false)}>
+          )}
+          {keycloak.tokenParsed.roles.includes("ADMIN") && (
+            <ListItemButton
+              component={Link}
+              to={"/admin"}
+              onClick={() => setOpenDrawer(false)}
+            >
               <ListItemIcon>
-                <AdminPanelSettingsIcon/>
+                <AdminPanelSettingsIcon />
                 <ListItemText>Admin</ListItemText>
               </ListItemIcon>
             </ListItemButton>
-          }
-
+          )}
         </List>
       </Drawer>
       <IconButton
         sx={{ color: "white", marginLeft: "auto" }}
-        onClick={() => setOpenDrawer(!openDrawer)}>
+        onClick={() => setOpenDrawer(!openDrawer)}
+      >
         <MenuIcon color="white" />
       </IconButton>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default DrawerComponent;
+export default DrawerComponent
