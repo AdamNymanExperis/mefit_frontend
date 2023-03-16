@@ -24,7 +24,7 @@ const listIcon = [
   <WorkoutIcon />,
   <ExerciseIcon />,
 ]
-const routes = ["/Profile", "/Goal", "/Workout", "/Exercise"]
+const routes = ["/profile", "/goaldashboard", "/workout", "/exercise"]
 const DrawerComponent = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
 

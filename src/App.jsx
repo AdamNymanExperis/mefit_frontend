@@ -1,8 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Goal from "./pages/GoalDashboard";
 import StartPage from "./pages/StartPage";
-import EditProductPage from "./pages/EditProductPage";
-import ProductsPage from "./pages/ProductsPage";
 import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/navbar/Navbar";
 import KeycloakRoute from "./routes/KeycloakRoute";
@@ -16,8 +13,6 @@ function App() {
       <main className="container">
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:productId" element={<EditProductPage />} />
           <Route path="/goaldashboard" element={<GoalDashboard />} />
           <Route
             path="/profile"
