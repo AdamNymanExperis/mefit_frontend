@@ -3,18 +3,16 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 export const getProfile = async (token, id) => {
   try {
-    const { data } = await axios.get(`${apiUrl}/profile/${id}`, {
+    const response = await axios.get(`${apiUrl}/api/v1/profile/${id}`, {
       headers: { Authorization: `Bearer  ${token}` },
     })
-    return Promise.resolve({
-      profile: data,
-      error: null,
-    })
+    if (!response.status === "200") {
+      throw new Error(response.error)
+    }
+    const data = response.data
+    return [null, data]
   } catch (e) {
-    return Promise.reject({
-      error: e.message,
-      profile: null,
-    })
+    return [e.message, []]
   }
 }
 
@@ -23,30 +21,28 @@ export const getProfile = async (token, id) => {
  * @param {any} user User to be added to API's database
  * @returns { Promise<{user: any, error: string | null}> } user
  */
-export const createProfile = async (profile, token) => {
+export const createProfile = async (id, token) => {
   try {
-    const { data } = await axios.post(`${apiUrl}/profile/`, {
+    const response = await axios.post(`${apiUrl}/api/v1/profile`, {
       headers: { Authorization: `Bearer  ${token}` },
-      profile: profile,
+      weight: 0,
+      height: 0,
+      keycloakId: id,
     })
-    return Promise.resolve({
-      profile: data,
-      error: null,
-    })
+    if (!response.status === "200") {
+      throw new Error(response.error)
+    }
+    const data = response.data
+    return [null, data]
   } catch (e) {
-    return Promise.reject({
-      profile: null,
-      error: e.message,
-    })
+    return [e.message, []]
   }
 }
 
 export const checkProfile = async (token, id) => {
-  const [checkError, profile] = await getProfile(token, id)
-
-  if (checkError !== null) {
+  const [error, profile] = await getProfile(token, id)
+  if (error === null) {
     return [null, profile]
   }
-  const newProfile = [id, 0, 0]
-  return await createProfile(newProfile, token)
+  return await createProfile(id, token)
 }
