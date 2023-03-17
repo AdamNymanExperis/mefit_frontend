@@ -13,6 +13,7 @@ import {
   Typography,
   useTheme
 } from "@mui/material"
+import GoalListItem from "./goalList/GoalListItem"
 
 export function FitnessCalendar() {
   const [currentGoals, setCurrentGoals] = useState([])
@@ -56,28 +57,8 @@ export function FitnessCalendar() {
         >
           <Typography variant="h5">Goals</Typography>
           <List>
-            {currentGoals.map((event) => (
-              <ListItem
-                key={event.id}
-                sx={{
-                  // backgroundColor: colors.greenAccent[500],
-                  margin: "10px 0",
-                  borderRadius: "2px",
-                }}
-              >
-                <ListItemText
-                 primary={event.title} /*
-                  secondary={
-                    {<Typography>
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </Typography>}
-                  } */
-                />
-              </ListItem>
+            {currentGoals.map((event) => ( 
+              <GoalListItem key={event.id} goal={event}/>
             ))}
           </List>
         </Box>
@@ -107,12 +88,12 @@ export function FitnessCalendar() {
             eventsSet={(events) => setCurrentGoals(events)}
             initialEvents={[
               {
-                id: "12315",
+                id: "1",
                 title: "Goal1",
                 date: "2023-03-14",
               },
               {
-                id: "5123",
+                id: "2",
                 title: "Goal2",
                 date: "2023-03-28",
               },
