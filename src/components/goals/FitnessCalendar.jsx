@@ -13,33 +13,96 @@ import {
   Typography,
   useTheme
 } from "@mui/material"
+import goal, { getGoals } from "../../api/goal"
+import { useEffect } from "react";
+import { mockGoals } from "../../data/mockData";
+
 
 export function FitnessCalendar() {
   const [currentGoals, setCurrentGoals] = useState([])
 
+  useEffect( () => {
+    const callApiForGoals = async() => {
+      const data = await getGoals() 
+      data[1].forEach(function (element) {
+        if(element.achieved) {
+          element.color="green"
+        } else {
+          element.color ="red"
+        }        
+      })
+      setCurrentGoals(data[1])
+    }
+    callApiForGoals()
+  }, [])
+
+  //--------------------------------------------------------
+
+  const addNewGoal = (goal) => {
+    //console.log(currentGoals)
+    setCurrentGoals([...currentGoals, goal])
+    console.log(currentGoals)
+
+    //console.log("adding goal ")
+    console.log(goal.id)
+  }
+
+  const removeGoal = () => {
+    const newGoals = [...currentGoals] // copy
+    newGoals.splice(currentGoals.length-1, 1) // remove goal, returns the removed goal also
+    setCurrentGoals(newGoals) // update state
+  }
+
+  /* const checkDate = (start) => {
+    let check = formatDate(start,'yyyy-MM-dd')
+    let today = formatDate(new Date(),'yyyy-MM-dd')
+    if(check < today)
+    {
+      console.log("false")
+        return false
+    }
+    else
+    {
+      console.log("false")
+        return true
+    }
+  } */
+
+  //-----------------------------------------------------------
   const handleDateClick = (selected) => {
-    console.log(selected)
+    //console.log(selected)
     const title = prompt("Enter goal title")
     const calenderApi = selected.view.calendar
     calenderApi.unselect()
 
+    // check so date is not back in time
+    //checkDate()
+
     if(title) {
-      calenderApi.addEvent({
+      const newGoal = {
         id: `${selected.dateStr}-${title}`,
         title,
         start: selected.startStr,
-        // end: selected.endStr,
-        end: '2023-03-20',
-        allDay: selected.allDay
-      })
+        //end: selected.endStr,
+        //end: '2023-03-20',
+        allDay: selected.allDay,
+        color: "red"
+      }
+      calenderApi.addEvent(newGoal)
+      addNewGoal(newGoal)
     }
   }
 
   const handleEventClick = (selected) => {
-    console.log(selected)
+    //console.log(selected)
     if (window.confirm(`Remove  '${selected.event.title}'`)) {
       selected.event.remove()
+      removeGoal()
     }
+  }
+
+  if (currentGoals.length === 0) {
+    return <p>Loading goals...</p>;
   }
 
   return (
@@ -56,9 +119,9 @@ export function FitnessCalendar() {
         >
           <Typography variant="h5">Goals</Typography>
           <List>
-            {currentGoals.map((event) => (
+            {currentGoals.map((goal) => (
               <ListItem
-                key={event.id}
+                key={goal.id}
                 sx={{
                   // backgroundColor: colors.greenAccent[500],
                   margin: "10px 0",
@@ -66,7 +129,7 @@ export function FitnessCalendar() {
                 }}
               >
                 <ListItemText
-                 primary={event.title} /*
+                 primary={goal.title} /*
                   secondary={
                     {<Typography>
                       {formatDate(event.start, {
@@ -104,28 +167,15 @@ export function FitnessCalendar() {
             dayMaxEvents={true}
             select={handleDateClick}
             eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentGoals(events)}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "Goal1",
-                date: "2023-03-14",
-              },
-              {
-                id: "5123",
-                title: "Goal2",
-                date: "2023-03-28",
-              },
-            ]}
+            //eventsSet={(events) => setCurrentGoals(events)}
+            initialEvents={[...currentGoals]} // wait for this async
+            displayEventTime= {false}
           />
         </Box>
       </Box>
     </Box>
   )
 }
-
-// export default FitnessCalendar
-
 
 /* const events = [
   { title: 'Goal 1', start: new Date(), end: '2023-03-20' }
@@ -172,3 +222,5 @@ function renderEventContent(eventInfo) {
     </>
   )
 }  */
+
+  
