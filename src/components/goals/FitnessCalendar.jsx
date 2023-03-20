@@ -13,10 +13,11 @@ import {
   Typography,
   useTheme
 } from "@mui/material"
+
 import goal, { getGoals } from "../../api/goal"
 import { useEffect } from "react";
 import { mockGoals } from "../../data/mockData";
-
+import GoalListItem from "./goalList/GoalListItem";
 
 export function FitnessCalendar() {
   const [currentGoals, setCurrentGoals] = useState([])
@@ -119,28 +120,8 @@ export function FitnessCalendar() {
         >
           <Typography variant="h5">Goals</Typography>
           <List>
-            {currentGoals.map((goal) => (
-              <ListItem
-                key={goal.id}
-                sx={{
-                  // backgroundColor: colors.greenAccent[500],
-                  margin: "10px 0",
-                  borderRadius: "2px",
-                }}
-              >
-                <ListItemText
-                 primary={goal.title} /*
-                  secondary={
-                    {<Typography>
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </Typography>}
-                  } */
-                />
-              </ListItem>
+            {currentGoals.map((event) => ( 
+              <GoalListItem key={event.id} goal={event}/>
             ))}
           </List>
         </Box>
