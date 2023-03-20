@@ -14,7 +14,7 @@ import {
   useTheme
 } from "@mui/material"
 
-import goal, { getGoals } from "../../api/goal"
+import goal, { getGoalsByProfileId } from "../../api/goal"
 import { useEffect } from "react";
 import { mockGoals } from "../../data/mockData";
 import GoalListItem from "./goalList/GoalListItem";
@@ -24,7 +24,7 @@ export function FitnessCalendar() {
 
   useEffect( () => {
     const callApiForGoals = async() => {
-      const data = await getGoals() 
+      const data = await getGoalsByProfileId(1) 
       data[1].forEach(function (element) {
         if(element.achieved) {
           element.color="green"
