@@ -1,6 +1,6 @@
 import { getExercises } from "../../api/exercise";
 import { useEffect, useState } from "react";
-import ImpairmentListItem from "../impairments/impairmentListItem";
+import ImpairmentListItem from "../impairments/ImpairmentListItem";
 import { Card, Stack, Grid } from '@mui/material';
 
 const ExerciseList = () => {
@@ -19,7 +19,7 @@ const ExerciseList = () => {
   return <>
     <Grid container spacing={2}>
       {exercises.map((exercise, index) => (
-        <Grid margin={3} key={index} xs={3}>
+        <Grid item={true} margin={3} key={index} xs={3}>
           <Card >
             <Stack margin={2} onClick={() => setSelected(index)} height="140">
               <img alt="" src={exercise.imageLink} height="150"></img>
