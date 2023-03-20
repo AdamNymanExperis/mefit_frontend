@@ -21,6 +21,20 @@ import GoalToWorkoutAdapter from "./GoalToWorkoutAdapter"
 const GoalListItem = ({goal}) => {
 
   const [open, setOpen] = useState(false);
+  const [achievedArr, setAchievedArr] = useState([]);
+  //const [achieved, setAchieved] = useState(false);
+
+  /*
+  const updateAchieved = (index) => {
+    const temp = achievedArr
+    temp[index] = !temp[index]
+    setAchievedArr(temp)
+    let isAchieved = true
+    temp.forEach( (i) => {
+      if(!temp[i]) isAchieved = false
+    })
+    setAchieved(isAchieved)
+  }*/
 
   const handleClick = () => {
     setOpen(!open);
@@ -31,13 +45,12 @@ const GoalListItem = ({goal}) => {
   useEffect( () => {
     const callApiForGoal = async(id) => {
       const data = await getGoalById(id) 
-      console.log(data[1])
       setGoal(data[1])
     }
     callApiForGoal(goal.id)
   }, [])
 
-  return <><ListItemButton onClick={handleClick}>
+  return <><ListItemButton onClick={handleClick} sx={{ backgroundColor: foundGoal.achieved? "#a7fa9d" : "#ff5c5c"}}>
     <ListItemIcon>
       <Flag />
     </ListItemIcon>
@@ -45,32 +58,22 @@ const GoalListItem = ({goal}) => {
   {open ? <ExpandLess /> : <ExpandMore />}
   </ListItemButton>
   
-  <Collapse in={open} timeout="auto" unmountOnExit>
+  <Collapse in={open} timeout="auto" unmountOnExit sx={{ padding: "10px", backgroundColor: foundGoal.achieved? "#d9fad4" : "#ffb8b8"}}>
     {foundGoal.workoutGoals?.length > 0 && <span>Workouts:</span>}
     <List component="div" disablePadding>
       {foundGoal.workoutGoals?.map(
         (workoutGoal, index) => {
-          return <GoalToWorkoutAdapter key={index} workoutGoalUrl={workoutGoal}/> 
+          //setAchievedArr([...achievedArr, false])
+          return <GoalToWorkoutAdapter key={index} workoutGoalUrl={workoutGoal} /*index={index} updateComplete={updateAchieved}*//> 
         }
       )}
     </List>
     {foundGoal.fitnessProgramGoals?.length > 0 && <ProgramListItem programGoalUrl={foundGoal.fitnessProgramGoals[0]} />}
-    <Button>Edit Goal<Edit /></Button>
+    
+    <Button href={"http://localhost:3000/profile?goal="+foundGoal.id} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
   </Collapse>
   </>
 }
-
-//{open ? <ExpandLess /> : <ExpandMore />}
-
-/* <ListItemIcon>
-    <InboxIcon />
-  </ListItemIcon>
-  
-  {foundGoal.workoutGoals.map((workoutGoal) => {
-        <WorkoutListItem workoutGoalUrl={workoutGoal}/>
-      })}
-  */ 
-
 
 /*<ListItem
     key={goal.id}
