@@ -1,5 +1,5 @@
-import keycloak from "../../keycloak";
-import { useEffect, useState } from "react";
+import keycloak from "../../keycloak"
+import { useEffect, useState } from "react"
 import {
   Avatar,
   Grid,
@@ -9,64 +9,56 @@ import {
   Alert,
   Slide,
   TextField,
-  Box,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { changeProfileData, checkProfile } from "../../api/profile";
+} from "@mui/material"
+import { changeProfileData, checkProfile } from "../../api/profile"
 
 function ProfileCard() {
-  const [userProfile, setUserProfile] = useState([]);
-  const [apiError, setApiError] = useState(null);
-  const [activeProfileCard, setActiveProfileCard] = useState("Profile");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
+  const [userProfile, setUserProfile] = useState([])
+  const [apiError, setApiError] = useState(null)
+  const [activeProfileCard, setActiveProfileCard] = useState("Profile")
+  const [weight, setWeight] = useState("")
+  const [height, setHeight] = useState("")
 
   const setProfileDataInVariable = async () => {
     const [error, data] = await checkProfile(
       keycloak.token,
       keycloak.tokenParsed.sub
-    );
+    )
 
-    setUserProfile(data);
-    console.log(data);
+    setUserProfile(data)
+    console.log(data)
     if (error !== null) {
-      setApiError(error);
+      setApiError(error)
     }
-  };
+  }
 
   useEffect(() => {
-    setProfileDataInVariable();
-  }, []);
+    setProfileDataInVariable()
+  }, [])
 
   function EditProfile() {
     if (weight === "") {
-      console.log(userProfile.weight);
+      console.log(userProfile.weight)
     } else {
-      console.log(weight);
+      console.log(weight)
     }
     if (height === "") {
-      console.log(userProfile.weight);
+      console.log(userProfile.weight)
     } else {
-      console.log(height);
+      console.log(height)
     }
-    console.log(userProfile.id);
+    console.log(userProfile.id)
     changeProfileData(
       keycloak.token,
       keycloak.tokenParsed.sub,
       userProfile.id,
       weight,
       height
-    );
-    setProfileDataInVariable();
+    )
+    setProfileDataInVariable()
   }
 
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+  if (userProfile.weight === undefined) return <p>loading</p>
   return (
     <div>
       {apiError && (
@@ -136,7 +128,11 @@ function ProfileCard() {
                       backgroundColor: "#1769aa",
                     },
                   }}
-                  onClick={() => setActiveProfileCard("ChangePassword")}
+                  onClick={() =>
+                    keycloak.login({
+                      action: "UPDATE_PASSWORD",
+                    })
+                  }
                 >
                   Change Password
                 </Button>
@@ -145,72 +141,67 @@ function ProfileCard() {
           </Paper>
         </Slide>
       )}
-
-      {activeProfileCard === "ChangePassword" && (
+      {activeProfileCard === "Profile" && (
         <Slide direction="right" in appear>
-          <Paper
-            sx={{
-              p: 2,
-              margin: "auto",
-              marginTop: 10,
-              minWidth: 250,
-              maxWidth: 600,
-              flexGrow: 1,
-              background: "#e0e1e5",
-            }}
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            sx={{ marginTop: 2 }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm>
-                <Grid item>
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Old Password"
-                  />
-                  <br />
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Password"
-                    sx={{ marginBottom: 2, marginTop: 2 }}
-                  />
-                  <br />
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Confirm Password"
-                  />
+            <Grid item xs={12} sx={{ margin: "auto" }}>
+              <Paper
+                sx={{
+                  p: 2,
+                  margin: "auto",
+                  minWidth: 150,
+                  maxWidth: 600,
+                  flexGrow: 1,
+                  background: "#e0e1e5",
+                }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item></Grid>
+                  <Grid item xs={3} sm container>
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography
+                          gutterBottom
+                          variant="subtitle1"
+                          component="div"
+                        >
+                          <p>Goals</p>
+                          {userProfile.goals.map((goals, index) => (
+                            <p>{goals}</p>
+                          ))}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid item>
-                <Button
-                  sx={{
-                    background: "#2196f3",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "#1769aa",
-                    },
-                  }}
-                >
-                  Save
-                </Button>
-                <br />
-                <Button
-                  sx={{
-                    background: "#2196f3",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "#1769aa",
-                    },
-                    marginTop: 2,
-                  }}
-                  onClick={() => setActiveProfileCard("Profile")}
-                >
-                  Back
-                </Button>
-              </Grid>
+              </Paper>
             </Grid>
-          </Paper>
+            <Grid item xs={12} sx={{ margin: "auto" }}>
+              <Paper
+                sx={{
+                  p: 2,
+                  margin: "auto",
+                  minWidth: 150,
+                  maxWidth: 600,
+                  flexGrow: 1,
+                  background: "#e0e1e5",
+                }}
+              >
+                <Grid item></Grid>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  <p>Impairments</p>
+                  {userProfile.impairments.map((impairment, index) => (
+                    <p>{impairment}</p>
+                  ))}
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
         </Slide>
       )}
 
@@ -236,7 +227,7 @@ function ProfileCard() {
                     defaultValue={userProfile.weight}
                     label="Current Weight"
                     onChange={(e) => {
-                      setWeight(e.target.value);
+                      setWeight(e.target.value)
                     }}
                   />
                   <br />
@@ -247,7 +238,7 @@ function ProfileCard() {
                     defaultValue={userProfile.height}
                     sx={{ marginTop: 2 }}
                     onChange={(e) => {
-                      setHeight(e.target.value);
+                      setHeight(e.target.value)
                     }}
                   />
                 </Grid>
@@ -285,6 +276,6 @@ function ProfileCard() {
         </Slide>
       )}
     </div>
-  );
+  )
 }
-export default ProfileCard;
+export default ProfileCard
