@@ -1,7 +1,23 @@
 import keycloak from "../../keycloak"
-import { Avatar, Grid, Paper, Typography, Button, Slide } from "@mui/material"
+import {
+  Avatar,
+  Grid,
+  Paper,
+  Typography,
+  Button,
+  Slide,
+  List,
+} from "@mui/material"
+import GoalListItem from "../goals/goalList/GoalListItem"
+import ImpairmentListItem from "../impairments/ImpairmentListItem"
+import { useEffect } from "react"
 
+let currentGoals = []
 function ProfileInfo(props) {
+  useEffect(() => {
+    currentGoals = props.userProfile.goals.map((x) => x.replace(/\D/g, ""))
+  }, [props.userProfile.goals])
+
   return (
     <div>
       <Slide direction="right" in appear>
@@ -96,16 +112,14 @@ function ProfileInfo(props) {
                 <Grid item xs={3} sm container>
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
-                      <Typography
-                        gutterBottom
-                        variant="subtitle1"
-                        component="div"
-                      >
-                        <p>Goals</p>
-                        {props.userProfile.goals.map((goals, index) => (
-                          <p key={index}>{goals}</p>
-                        ))}
+                      <Typography variant="h5" justifyContent={"center"}>
+                        Goals
                       </Typography>
+                      {/* <List>
+                        {currentGoals.map((event) => (
+                          <GoalListItem key={event.id} goal={event} />
+                        ))}
+                      </List> */}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -127,7 +141,7 @@ function ProfileInfo(props) {
               <Typography gutterBottom variant="subtitle1" component="div">
                 <p>Impairments</p>
                 {props.userProfile.impairments.map((impairment, index) => (
-                  <p key={index}>{impairment}</p>
+                  <ImpairmentListItem key={index} impairmentURL={impairment} />
                 ))}
               </Typography>
             </Paper>
