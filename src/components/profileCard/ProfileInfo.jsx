@@ -7,6 +7,7 @@ import {
   Button,
   Slide,
   List,
+  Box,
 } from "@mui/material"
 import GoalListItem from "../goals/goalList/GoalListItem"
 import ImpairmentListItem from "../impairments/ImpairmentListItem"
@@ -94,7 +95,7 @@ function ProfileInfo(props) {
           container
           rowSpacing={1}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          sx={{ marginTop: 2 }}
+          sx={{ margin: "auto" }}
         >
           <Grid item xs={12} sx={{ margin: "auto" }}>
             <Paper
@@ -107,22 +108,15 @@ function ProfileInfo(props) {
                 background: "#e0e1e5",
               }}
             >
-              <Grid container spacing={2}>
-                <Grid item></Grid>
-                <Grid item xs={3} sm container>
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography variant="h5" justifyContent={"center"}>
-                        Goals
-                      </Typography>
-                      {/* <List>
-                        {currentGoals.map((event) => (
-                          <GoalListItem key={event.id} goal={event} />
-                        ))}
-                      </List> */}
-                    </Grid>
-                  </Grid>
-                </Grid>
+              <Grid item xs>
+                <Typography variant="h5" style={{ textAlign: "center" }}>
+                  My Goals
+                </Typography>
+                {/* <List>
+                  {currentGoals.map((event) => (
+                    <GoalListItem key={event.id} goal={event} />
+                  ))}
+                </List> */}
               </Grid>
             </Paper>
           </Grid>
@@ -137,13 +131,25 @@ function ProfileInfo(props) {
                 background: "#e0e1e5",
               }}
             >
-              <Grid item></Grid>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                <p>Impairments</p>
-                {props.userProfile.impairments.map((impairment, index) => (
-                  <ImpairmentListItem key={index} impairmentURL={impairment} />
-                ))}
+              <Typography variant="h5" style={{ textAlign: "center" }}>
+                My Impairment
               </Typography>
+              {props.userProfile.impairments.map((impairment, index) => (
+                <ImpairmentListItem key={index} impairmentURL={impairment} />
+              ))}
+              <Button
+                sx={{
+                  marginTop: 1,
+                  background: "#2196f3",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1769aa",
+                  },
+                }}
+                onClick={() => props.setActiveProfileCard("EditImpairments")}
+              >
+                Edit Impairments
+              </Button>
             </Paper>
           </Grid>
         </Grid>
