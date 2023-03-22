@@ -1,6 +1,6 @@
-import ProfileCard from "../components/profileCard/ProfileCard";
+import ProfileController from "../components/profile/ProfileController"
 
 function ProfilePage() {
-  return <ProfileCard />;
+  return <ProfileController />
 }
-export default ProfilePage;
+export default ProfilePage
