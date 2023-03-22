@@ -6,6 +6,7 @@ import KeycloakRoute from "./routes/KeycloakRoute"
 import { ROLES } from "./const/roles"
 import GoalDashboard from "./pages/GoalDashboard"
 import ExercisePage from "./pages/ExercisePage"
+import GoalEditor from "./pages/GoalEditor";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<StartPage />} />
           <Route path="/goaldashboard" element={<GoalDashboard />} />
           <Route path="/exercise" element={<ExercisePage />} />
+          <Route path="/goaleditor" element={<GoalEditor />} />
           <Route
             path="/profile"
             element={

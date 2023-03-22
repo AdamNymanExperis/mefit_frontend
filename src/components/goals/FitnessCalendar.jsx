@@ -18,6 +18,8 @@ import goal, { getGoalsByProfileId } from "../../api/goal"
 import { useEffect } from "react";
 import { mockGoals } from "../../data/mockData";
 import GoalListItem from "./goalList/GoalListItem";
+import { createGoal, deleteGoal } from "../../api/goal";
+import keycloak from "../../keycloak";
 
 export function FitnessCalendar() {
   const [currentGoals, setCurrentGoals] = useState([])
@@ -35,16 +37,16 @@ export function FitnessCalendar() {
       setCurrentGoals(data[1])
     }
     callApiForGoals()
-  }, [])
+  }, []) 
+
+  useEffect( () => {
+    console.log(...currentGoals)
+  }, [currentGoals]) 
 
   //--------------------------------------------------------
 
   const addNewGoal = (goal) => {
-    //console.log(currentGoals)
     setCurrentGoals([...currentGoals, goal])
-    console.log(currentGoals)
-
-    //console.log("adding goal ")
     console.log(goal.id)
   }
 
@@ -54,51 +56,45 @@ export function FitnessCalendar() {
     setCurrentGoals(newGoals) // update state
   }
 
-  /* const checkDate = (start) => {
-    let check = formatDate(start,'yyyy-MM-dd')
-    let today = formatDate(new Date(),'yyyy-MM-dd')
-    if(check < today)
-    {
-      console.log("false")
-        return false
-    }
-    else
-    {
-      console.log("false")
-        return true
-    }
-  } */
+  const calculateEndDate = (start) => {
+    let firstDay = new Date(start)
+    let nextWeek = new Date(firstDay.getTime() + 7 * 24 * 60 * 60 * 1000)
+    return nextWeek
+  }
 
   //-----------------------------------------------------------
-  const handleDateClick = (selected) => {
-    //console.log(selected)
+  const handleDateClick = async (selected) => {
+    console.log(selected)
     const title = prompt("Enter goal title")
     const calenderApi = selected.view.calendar
     calenderApi.unselect()
-
     // check so date is not back in time
-    //checkDate()
 
     if(title) {
-      const newGoal = {
-        id: `${selected.dateStr}-${title}`,
-        title,
+      const goalToPost = {
+        title: title,
         start: selected.startStr,
-        //end: selected.endStr,
-        //end: '2023-03-20',
+        end: calculateEndDate(selected.startStr),
+        achieved: false,
+        profileId: 1,
         allDay: selected.allDay,
         color: "red"
-      }
-      calenderApi.addEvent(newGoal)
-      addNewGoal(newGoal)
+        }
+      let postedGoal = await createGoal(keycloak.token, goalToPost)
+      addNewGoal(postedGoal)
+      calenderApi.addEvent(goalToPost)
+      //calenderApi.addEvent(postedGoal) // den här innehåller id för att kunna delete frpn api
     }
   }
 
   const handleEventClick = (selected) => {
-    //console.log(selected)
+    console.log(selected)
     if (window.confirm(`Remove  '${selected.event.title}'`)) {
       selected.event.remove()
       removeGoal()
+      //deleteGoal(keycloak.token, 18) // delete from api
+      // ändra till draggable false ------------------------------------------>
+      // ta bort overlap till false
     }
   }
 
@@ -121,7 +117,8 @@ export function FitnessCalendar() {
           <Typography variant="h5">Goals</Typography>
           <List>
             {currentGoals.map((event) => ( 
-              <GoalListItem key={event.id} goal={event}/>
+
+              <GoalListItem key={event.id} goalId={event.id}/>
             ))}
           </List>
         </Box>
@@ -157,51 +154,6 @@ export function FitnessCalendar() {
     </Box>
   )
 }
-
-/* const events = [
-  { title: 'Goal 1', start: new Date(), end: '2023-03-20' }
-]
-
-export function FitnessCalendar() {
-  return (
-    <div>
-      <h1>Me Fit Calender</h1>
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView='dayGridMonth'
-        weekends={true}
-        events={events}
-        eventContent={renderEventContent}
-        dateClick={handleDateClick}
-        headerToolbar={{
-        start: 'today,prev,next', // will normally be on the left. if RTL, will be on the right
-        center: 'title',
-        end: 'dayGridMonth,dayGridWeek,dayGridDay', // will normally be on the right. if RTL, will be on the left
-        }}
-        height="80vh"
-        initialEvents={[]} // get from
-      />
-    </div>
-  )
-}
-
- const addWeeksToDate = (dateObj, numberOfWeeks) => {
-  dateObj.setDate(dateObj.getDate() + numberOfWeeks * 7);
-  return dateObj;
-} 
-
-function handleDateClick(arg) {
-  alert(arg.dateStr)
-}
-
-// a custom render function
-function renderEventContent(eventInfo) {
-  return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
-    </>
-  )
-}  */
+ 
 
   
