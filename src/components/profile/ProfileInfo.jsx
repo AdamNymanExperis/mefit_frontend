@@ -16,7 +16,9 @@ import { useEffect } from "react"
 let currentGoals = []
 function ProfileInfo(props) {
   useEffect(() => {
-    currentGoals = props.userProfile.goals.map((x) => x.replace(/\D/g, ""))
+    currentGoals = props.userProfile.goals.map((x) =>
+      x.substring(x.lastIndexOf("/") + 1)
+    )
   }, [props.userProfile.goals])
 
   return (

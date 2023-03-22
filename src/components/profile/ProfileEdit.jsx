@@ -7,11 +7,6 @@ function ProfileEdit(props) {
   let [weight, setWeight] = useState("")
   let [height, setHeight] = useState("")
 
-  function goBackToProfileAndUpdateData() {
-    props.setActiveProfileCard("Profile")
-    props.setProfileDataInVariable()
-  }
-
   async function EditProfile() {
     if (weight === "") {
       weight = props.userProfile.weight
@@ -27,11 +22,11 @@ function ProfileEdit(props) {
       height
     )
     if (message === "success") {
-      props.setProfileSaveMessage("Profile Saved")
+      props.setsaveMessage("Profile Saved")
       props.setApiError(null)
     } else {
       props.setApiError(message)
-      props.setProfileSaveMessage(null)
+      props.setsaveMessage(null)
     }
   }
   return (
@@ -96,7 +91,7 @@ function ProfileEdit(props) {
                   },
                   marginTop: 2,
                 }}
-                onClick={() => goBackToProfileAndUpdateData()}
+                onClick={() => props.goBackToProfileAndUpdateData()}
               >
                 Back
               </Button>

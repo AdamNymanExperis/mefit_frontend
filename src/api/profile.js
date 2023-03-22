@@ -70,3 +70,24 @@ export const changeProfileData = async (
     return e.message
   }
 }
+
+export const updateImpairmentsIntoProfile = async (
+  token,
+  userId,
+  impairments
+) => {
+  try {
+    const response = await axios.put(
+      `${apiUrl}/api/v1/profile/${userId}/impairments`,
+      {
+        data: { profileId: 33, impairmentIds: impairments },
+      }
+    )
+    if (!response.status === "200") {
+      throw new Error(response.error)
+    }
+    return "success"
+  } catch (e) {
+    return e.message
+  }
+}

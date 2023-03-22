@@ -4,12 +4,13 @@ import { Alert, Slide } from "@mui/material"
 import { checkProfile } from "../../api/profile"
 import ProfileEdit from "./ProfileEdit"
 import ProfileInfo from "./ProfileInfo"
+import ImpairmentEdit from "../impairments/ImpairmentEdit"
 
 function ProfileCard() {
   const [userProfile, setUserProfile] = useState([])
   const [apiError, setApiError] = useState(null)
   const [activeProfileCard, setActiveProfileCard] = useState("Profile")
-  const [profileSaveMessage, setProfileSaveMessage] = useState(null)
+  const [saveMessage, setSaveMessage] = useState(null)
 
   const setProfileDataInVariable = async () => {
     const [error, data] = await checkProfile(
@@ -20,6 +21,11 @@ function ProfileCard() {
     if (error !== null) {
       setApiError(error)
     }
+  }
+
+  const goBackToProfileAndUpdateData = () => {
+    setActiveProfileCard("Profile")
+    setProfileDataInVariable()
   }
 
   useEffect(() => {
@@ -36,10 +42,10 @@ function ProfileCard() {
           </Alert>
         </Slide>
       )}
-      {profileSaveMessage && (
+      {saveMessage && (
         <Slide direction="down" in appear>
           <Alert sx={{ marginTop: 2 }} severity="success">
-            {profileSaveMessage}
+            {saveMessage}
           </Alert>
         </Slide>
       )}
@@ -54,8 +60,18 @@ function ProfileCard() {
         <ProfileEdit
           setApiError={setApiError}
           setActiveProfileCard={setActiveProfileCard}
-          setProfileSaveMessage={setProfileSaveMessage}
+          setSaveMessage={setSaveMessage}
           setProfileDataInVariable={setProfileDataInVariable}
+          goBackToProfileAndUpdateData={goBackToProfileAndUpdateData}
+          userProfile={userProfile}
+        />
+      )}
+
+      {activeProfileCard === "EditImpairments" && (
+        <ImpairmentEdit
+          setApiError={setApiError}
+          setSaveMessage={setSaveMessage}
+          goBackToProfileAndUpdateData={goBackToProfileAndUpdateData}
           userProfile={userProfile}
         />
       )}
