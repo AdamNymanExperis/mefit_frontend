@@ -121,7 +121,7 @@ export function FitnessCalendar() {
           <Typography variant="h5">Goals</Typography>
           <List>
             {currentGoals.map((event) => ( 
-              <GoalListItem key={event.id} goal={event}/>
+              <GoalListItem key={event.id} goalId={event.id}/>
             ))}
           </List>
         </Box>
