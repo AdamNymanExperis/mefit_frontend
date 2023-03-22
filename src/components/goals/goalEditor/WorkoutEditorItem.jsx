@@ -1,39 +1,55 @@
 import { useEffect, useState } from "react";
 import {
-    ListItem,
     ListItemText,
-    Stack,
     ListItemIcon,
     ListItemButton,
     List,
     Collapse,
-    Button
+    IconButton
 } from "@mui/material"
 import { ExpandLess, 
     ExpandMore,
-    Flag,
     Edit,
-    FitnessCenter      
+    FitnessCenter,
+    Delete,
+    Add
 } from "@mui/icons-material"
-import { getWorkoutGoalByUrl } from "../../../api/workoutgoal";
-import { getWorkoutByUrl } from "../../../api/workout";
 import WorkoutToExerciseAdapter from "./WorkoutToExerciseAdapter"
+import keycloak from "../../../keycloak";
+import { createWorkoutGoal } from "../../../api/workoutgoal";
 
-const WorkoutEditorItem = ({workoutGoalUrl, inGoal}) => {
+const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoal}) => {
     const [workout, setWorkout] = useState()
     const [open, setOpen] = useState(false);
 
     const handleClick = () => {
-        setOpen(!open);
+      setOpen(!open);
+    };
+
+    const handleDelete = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    const handleAdd = async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const newWorkoutGoal = await createWorkoutGoal(goal, workoutObject, keycloak.token)
+      const newWorkoutGoalString = "api/v1/workoutGoal/" + newWorkoutGoal[1].id
+      const tempGoal = goal
+      tempGoal.workoutGoals = [...goal.workoutGoals, newWorkoutGoalString]
+      
+      setWorkoutGoals(tempGoal.workoutGoals)
+    };
+
+    const handleEdit = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
     };
 
     useEffect( () => {
-      const callApi = async(url) => {
-        const workoutGoalData = await getWorkoutGoalByUrl(url) 
-        const workoutData = await getWorkoutByUrl(workoutGoalData[1].workout)
-        setWorkout(workoutData[1])
-      }
-      callApi(workoutGoalUrl)
+      setWorkout(workoutObject)
     }, [])
 
     if(workout === undefined) return <p>loading...</p>
@@ -43,7 +59,21 @@ const WorkoutEditorItem = ({workoutGoalUrl, inGoal}) => {
         <FitnessCenter />
     </ListItemIcon>
   <ListItemText primary={workout.name} />
-  <Button>test</Button>
+  {inGoal?
+  <IconButton aria-label="delete" onClick={handleDelete}>
+    <Delete />
+  </IconButton>
+  : 
+  <>
+  <IconButton aria-label="add" onClick={handleAdd}>
+    <Add />
+  </IconButton>
+  <IconButton aria-label="edit" onClick={handleEdit}>
+    <Edit />
+  </IconButton>
+  </>
+  }
+  
   {open ? <ExpandLess /> : <ExpandMore />}
   </ListItemButton>
   

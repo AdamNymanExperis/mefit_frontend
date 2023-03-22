@@ -1,7 +1,7 @@
-import GoalEditorCard from "../components/goals/goalEditor/GoalEditorCard"
+import GoalEditorController from "../components/goals/goalEditor/GoalEditorController"
 
 function GoalEditor() {
-    return <GoalEditorCard />;
+    return <GoalEditorController />;
 }
 export default GoalEditor;
   

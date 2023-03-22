@@ -23,15 +23,15 @@ import keycloak from "../../keycloak";
 
 export function FitnessCalendar() {
   const [currentGoals, setCurrentGoals] = useState([])
-
+  
   useEffect( () => {
     const callApiForGoals = async() => {
       const data = await getGoalsByProfileId(1) 
       data[1].forEach(function (element) {
         if(element.achieved) {
-          element.color="green"
+          element.color="#a7fa9d"
         } else {
-          element.color ="red"
+          element.color ="#ff5c5c"
         }        
       })
       setCurrentGoals(data[1])

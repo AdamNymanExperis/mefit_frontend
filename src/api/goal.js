@@ -63,3 +63,24 @@ export const deleteGoal = async (token, goalId) => {
     return [e.message, []]
   }
 }
+
+export const updateGoal = async (token, goal, goalId) => {
+  try {
+    const response = await axios.put(`${apiUrl}/api/v1/goal/${goalId}`, {
+      headers: { Authorization: `Bearer  ${token}` },
+      id: goal.id,
+      title: goal.title,
+      start: goal.start,
+      end: goal.end,
+      achieved: goal.achieved,
+      profileId: goal.profileId,
+    })
+    if (!response.status === "200") {
+      throw new Error(response.error)
+    }
+    const data = response.data
+    return [null, data]
+  } catch (e) {
+    return [e.message, []]
+  }
+}
