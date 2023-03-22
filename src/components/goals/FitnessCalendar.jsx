@@ -50,7 +50,6 @@ export function FitnessCalendar() {
 
   const removeGoal = (id) => {
     const newGoals = [...currentGoals] // copy
-
     let indexToRemove = null
     for(let i = 0; i < newGoals.length; i++) {
       if(newGoals[i].id == id) { // dont check for type
@@ -62,8 +61,6 @@ export function FitnessCalendar() {
       let removedGoal = newGoals.splice(indexToRemove, 1) // remove goal, returns the removed goal also
       console.log(removedGoal)
     }
-
-    //newGoals.splice(currentGoals.length-1, 1) // remove goal, returns the removed goal also
     setCurrentGoals(newGoals) // update state
   }
 
@@ -73,29 +70,32 @@ export function FitnessCalendar() {
     return nextWeek
   }
 
-  const handleDateClick = async (selected) => {
-    console.log(selected)
-    const title = prompt("Enter goal title")
-    const calenderApi = selected.view.calendar
-    calenderApi.unselect()
+  const checkDate = (date) => {
+    return new Date(date).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0)
+  }
 
-    // check so date is not back in time
-
-    if(title) {
-      const goalToPost = {
-        title: title,
-        start: selected.startStr,
-        end: calculateEndDate(selected.startStr),
-        achieved: false,
-        profileId: 1,
-        allDay: selected.allDay,
-        color: "red",
-        }
-      let postedGoal = createGoal(keycloak.token, goalToPost)    
-      let promise = await Promise.resolve(postedGoal)
-      addNewGoal(promise[1])
-      console.log(promise[1])
-      calenderApi.addEvent({...promise[1], color: "red", allDay: true })
+  const handleDateClick = async (selected) => {   
+    if(checkDate(selected.start)) {
+      const title = prompt("Enter goal title")
+      const calenderApi = selected.view.calendar
+      calenderApi.unselect()
+   
+      if(title) {
+        const goalToPost = {
+          title: title,
+          start: selected.startStr,
+          end: calculateEndDate(selected.startStr),
+          achieved: false,
+          profileId: 1,
+          allDay: selected.allDay,
+          color: "red",
+          }
+        let postedGoal = createGoal(keycloak.token, goalToPost)    
+        let promise = await Promise.resolve(postedGoal)
+        addNewGoal(promise[1])
+        console.log(promise[1])
+        calenderApi.addEvent({...promise[1], color: "red", allDay: true })
+      }
     }
   }
 
@@ -157,7 +157,7 @@ export function FitnessCalendar() {
             select={handleDateClick}
             eventClick={handleEventClick}
             //eventsSet={(events) => setCurrentGoals(events)}
-            initialEvents={[...currentGoals]} // wait for this async
+            initialEvents={[...currentGoals]}
             displayEventTime= {false}
             //eventOverlap = {false} // when load event
             //selectOverlap = {false}  // when create event from calender
