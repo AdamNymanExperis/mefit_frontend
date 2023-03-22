@@ -147,7 +147,8 @@ export function FitnessCalendar() {
             headerToolbar={{
               left: "prev,next today",
               center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+              //right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+              right: ""
             }}
             initialView="dayGridMonth"
             editable={false}
