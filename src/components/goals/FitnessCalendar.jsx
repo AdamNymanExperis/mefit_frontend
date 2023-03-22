@@ -43,13 +43,13 @@ export function FitnessCalendar() {
     console.log(...currentGoals)
   }, [currentGoals]) 
 
-  //--------------------------------------------------------
-
   const addNewGoal = (goal) => {
     setCurrentGoals([...currentGoals, goal])
     console.log(goal.id)
   }
 
+  // Removar bara sista, måste gå på id
+  // Loopa igenom alla och hitta rätt
   const removeGoal = () => {
     const newGoals = [...currentGoals] // copy
     newGoals.splice(currentGoals.length-1, 1) // remove goal, returns the removed goal also
@@ -62,12 +62,12 @@ export function FitnessCalendar() {
     return nextWeek
   }
 
-  //-----------------------------------------------------------
   const handleDateClick = async (selected) => {
     console.log(selected)
     const title = prompt("Enter goal title")
     const calenderApi = selected.view.calendar
     calenderApi.unselect()
+
     // check so date is not back in time
 
     if(title) {
@@ -78,15 +78,13 @@ export function FitnessCalendar() {
         achieved: false,
         profileId: 1,
         allDay: selected.allDay,
-        color: "red"
+        color: "red",
         }
-      let postedGoal = createGoal(keycloak.token, goalToPost)
-      
-      let test = await Promise.resolve(postedGoal)
-      addNewGoal(test[1])
-      console.log(test)
-      calenderApi.addEvent(test[1])
-      //calenderApi.addEvent(postedGoal) // den här innehåller id för att kunna delete frpn api
+      let postedGoal = createGoal(keycloak.token, goalToPost)    
+      let promise = await Promise.resolve(postedGoal)
+      addNewGoal(promise[1])
+      console.log(promise[1])
+      calenderApi.addEvent({...promise[1], color: "red", allDay: true })
     }
   }
 
@@ -94,10 +92,9 @@ export function FitnessCalendar() {
     console.log(selected)
     if (window.confirm(`Remove  '${selected.event.title}'`)) {
       selected.event.remove()
-      removeGoal()
-      //deleteGoal(keycloak.token, 18) // delete from api
-      // ändra till draggable false ------------------------------------------>
-      // ta bort overlap till false
+      let id = selected.event.id
+      removeGoal() // måste skicka in id
+      deleteGoal(keycloak.token, id) // delete from api
     }
   }
 
@@ -142,7 +139,7 @@ export function FitnessCalendar() {
               right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
             }}
             initialView="dayGridMonth"
-            editable={true}
+            editable={false}
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
@@ -151,6 +148,8 @@ export function FitnessCalendar() {
             //eventsSet={(events) => setCurrentGoals(events)}
             initialEvents={[...currentGoals]} // wait for this async
             displayEventTime= {false}
+            //eventOverlap = {false} // when load event
+            //selectOverlap = {false}  // when create event from calender
           />
         </Box>
       </Box>
