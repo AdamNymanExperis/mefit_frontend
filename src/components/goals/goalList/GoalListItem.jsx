@@ -18,7 +18,7 @@ import { getGoalById } from "../../../api/goal"
 import ProgramListItem from "./ProgramListItem"
 import GoalToWorkoutAdapter from "./GoalToWorkoutAdapter"
 
-const GoalListItem = ({goal}) => {
+const GoalListItem = ({goalId}) => {
 
   const [open, setOpen] = useState(false);
   const [achievedArr, setAchievedArr] = useState([]);
@@ -47,14 +47,14 @@ const GoalListItem = ({goal}) => {
       const data = await getGoalById(id) 
       setGoal(data[1])
     }
-    callApiForGoal(goal.id)
+    callApiForGoal(goalId)
   }, [])
 
   return <><ListItemButton onClick={handleClick} sx={{ backgroundColor: foundGoal.achieved? "#a7fa9d" : "#ff5c5c"}}>
     <ListItemIcon>
       <Flag />
     </ListItemIcon>
-  <ListItemText primary={goal.title} />
+  <ListItemText primary={foundGoal.title} />
   {open ? <ExpandLess /> : <ExpandMore />}
   </ListItemButton>
   
@@ -70,7 +70,7 @@ const GoalListItem = ({goal}) => {
     </List>
     {foundGoal.fitnessProgramGoals?.length > 0 && <ProgramListItem programGoalUrl={foundGoal.fitnessProgramGoals[0]} />}
     
-    <Button href={"http://localhost:3000/profile?goal="+foundGoal.id} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
+    <Button href={"http://localhost:3000/goaleditor?goal="+foundGoal.id} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
   </Collapse>
   </>
 }
