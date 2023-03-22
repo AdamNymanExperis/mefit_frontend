@@ -48,11 +48,22 @@ export function FitnessCalendar() {
     console.log(goal.id)
   }
 
-  // Removar bara sista, måste gå på id
-  // Loopa igenom alla och hitta rätt
-  const removeGoal = () => {
+  const removeGoal = (id) => {
     const newGoals = [...currentGoals] // copy
-    newGoals.splice(currentGoals.length-1, 1) // remove goal, returns the removed goal also
+
+    let indexToRemove = null
+    for(let i = 0; i < newGoals.length; i++) {
+      if(newGoals[i].id == id) { // dont check for type
+        indexToRemove = i
+      }
+    }
+    console.log(indexToRemove)
+    if(indexToRemove !== null) {
+      let removedGoal = newGoals.splice(indexToRemove, 1) // remove goal, returns the removed goal also
+      console.log(removedGoal)
+    }
+
+    //newGoals.splice(currentGoals.length-1, 1) // remove goal, returns the removed goal also
     setCurrentGoals(newGoals) // update state
   }
 
@@ -93,7 +104,7 @@ export function FitnessCalendar() {
     if (window.confirm(`Remove  '${selected.event.title}'`)) {
       selected.event.remove()
       let id = selected.event.id
-      removeGoal() // måste skicka in id
+      removeGoal(id) // delete from calendar
       deleteGoal(keycloak.token, id) // delete from api
     }
   }
