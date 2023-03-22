@@ -1,4 +1,4 @@
-import keycloak from "../keycloak";
+import keycloak from "../keycloak"
 import ExerciseList from "../components/exercises/ExerciseList"
 /**
  * Example Start Page using Keycloak Context.
@@ -7,7 +7,6 @@ function StartPage() {
   return (
     <div>
       <h1>Start Page</h1>
-      <ExerciseList/>
       <section className="actions">
         {!keycloak.authenticated && (
           <button onClick={() => keycloak.login()}>Login</button>
@@ -24,6 +23,6 @@ function StartPage() {
         </div>
       )}
     </div>
-  );
+  )
 }
-export default StartPage;
+export default StartPage
