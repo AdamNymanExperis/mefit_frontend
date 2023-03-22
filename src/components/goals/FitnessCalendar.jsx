@@ -80,9 +80,12 @@ export function FitnessCalendar() {
         allDay: selected.allDay,
         color: "red"
         }
-      let postedGoal = await createGoal(keycloak.token, goalToPost)
-      addNewGoal(postedGoal)
-      calenderApi.addEvent(goalToPost)
+      let postedGoal = createGoal(keycloak.token, goalToPost)
+      
+      let test = await Promise.resolve(postedGoal)
+      addNewGoal(test[1])
+      console.log(test)
+      calenderApi.addEvent(test[1])
       //calenderApi.addEvent(postedGoal) // den här innehåller id för att kunna delete frpn api
     }
   }
