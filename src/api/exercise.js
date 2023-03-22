@@ -13,3 +13,16 @@ export const getExercises = async () => {
     return [error.message, []]
   }
 }
+
+export const getExerciseByUrl = async (url) => {
+    const response = await axios.get(`${apiUrl}/${url}`)
+    try {
+      if (!response.status === 200) {
+        throw new Error("exercise not found")
+      }
+      const data = response.data
+      return [null, data]
+    } catch (error) {
+      return [error.message, []]
+    }
+  }
