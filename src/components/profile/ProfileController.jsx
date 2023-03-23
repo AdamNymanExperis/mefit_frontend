@@ -23,6 +23,7 @@ function ProfileCard() {
     if (error !== null) {
       setApiError(error)
     }
+
     console.log(userProfile)
   }
 
