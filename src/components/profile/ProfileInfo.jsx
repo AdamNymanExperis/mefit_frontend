@@ -11,14 +11,19 @@ import {
 } from "@mui/material"
 import GoalListItem from "../goals/goalList/GoalListItem"
 import ImpairmentListItem from "../impairments/ImpairmentListItem"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
-let currentGoals = []
 function ProfileInfo(props) {
+  const [currentGoals, setCurrentGoals] = useState([])
   useEffect(() => {
-    currentGoals = props.userProfile.goals.map((x) => x.replace(/\D/g, ""))
+    setCurrentGoals(
+      props.userProfile.goals.map((x) =>
+        parseInt(x.substring(x.lastIndexOf("/") + 1))
+      )
+    )
   }, [props.userProfile.goals])
 
+  if (currentGoals.length <= 0) return <p>Loading</p>
   return (
     <div>
       <Slide direction="right" in appear>
@@ -112,11 +117,11 @@ function ProfileInfo(props) {
                 <Typography variant="h5" style={{ textAlign: "center" }}>
                   My Goals
                 </Typography>
-                {/* <List>
-                  {currentGoals.map((event) => (
-                    <GoalListItem key={event.id} goal={event} />
+                <List>
+                  {currentGoals.map((currentGoal) => (
+                    <GoalListItem key={currentGoal} goalId={currentGoal} />
                   ))}
-                </List> */}
+                </List>
               </Grid>
             </Paper>
           </Grid>

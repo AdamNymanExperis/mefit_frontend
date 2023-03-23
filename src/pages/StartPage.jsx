@@ -1,9 +1,16 @@
 import keycloak from "../keycloak"
-import ExerciseList from "../components/exercises/ExerciseList"
+import { checkProfile } from "../api/profile"
 /**
  * Example Start Page using Keycloak Context.
  */
 function StartPage() {
+  const callApiForCheckUser = async () => {
+    await checkProfile(keycloak.token, keycloak.tokenParsed.sub)
+  }
+  if (keycloak.authenticated) {
+    callApiForCheckUser()
+  }
+
   return (
     <div>
       <h1>Start Page</h1>

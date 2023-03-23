@@ -18,9 +18,25 @@ function Navbar() {
             Me-Fit Application
           </Typography>
           {keycloak.authenticated && keycloak.tokenParsed && (
-            <Button color="inherit" component={Link} to="/profile">
-              {keycloak.tokenParsed.preferred_username}
-            </Button>
+            <div>
+              <Button color="inherit" component={Link} to="/profile">
+                {keycloak.tokenParsed.preferred_username}
+              </Button>
+              <Button
+                sx={{
+                  background: "white",
+                  color: "#2196f3",
+                  "&:hover": {
+                    backgroundColor: "#2196f3",
+                    color: "white",
+                  },
+                  marginLeft: 5,
+                }}
+                onClick={() => keycloak.logout()}
+              >
+                Logout
+              </Button>
+            </div>
           )}
         </Toolbar>
       </AppBar>
