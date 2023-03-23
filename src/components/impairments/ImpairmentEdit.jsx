@@ -16,20 +16,14 @@ function ImpairmentEdit(props) {
   const [impairmentRows, setImpairmentRows] = useState([])
   const [currentImpairments, setCurrentImpairments] = useState([])
 
-  async function SaveImpairments(impairments) {
+  const SaveImpairments = async (impairments) => {
     console.log(impairments)
     let message = await updateImpairmentsIntoProfile(
       keycloak.token,
       keycloak.tokenParsed.sub,
       impairments
     )
-    if (message === "success") {
-      props.setsaveMessage("Profile Saved")
-      props.setApiError(null)
-    } else {
-      props.setApiError(message)
-      props.setsaveMessage(null)
-    }
+    props.goBackToProfileAndUpdateData()
   }
 
   useEffect(() => {
@@ -46,6 +40,7 @@ function ImpairmentEdit(props) {
         parseInt(x.substring(x.lastIndexOf("/") + 1))
       )
     )
+    console.log(currentImpairments)
   }, [props])
 
   if (impairmentRows === undefined) return <p>loading</p>
@@ -57,10 +52,10 @@ function ImpairmentEdit(props) {
           columns={columns}
           checkboxSelection
           disableRowSelectionOnClick
+          rowSelectionModel={currentImpairments}
           onRowSelectionModelChange={(ids) => {
             setCurrentImpairments(ids)
           }}
-          rowSelectionModel={currentImpairments}
         />
       </Box>
       <Box

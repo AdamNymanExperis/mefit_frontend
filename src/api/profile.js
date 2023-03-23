@@ -79,9 +79,7 @@ export const updateImpairmentsIntoProfile = async (
   try {
     const response = await axios.put(
       `${apiUrl}/api/v1/profile/${userId}/impairments`,
-      {
-        data: { profileId: 33, impairmentIds: impairments },
-      }
+      impairments
     )
     if (!response.status === "200") {
       throw new Error(response.error)

@@ -6,7 +6,7 @@ import KeycloakRoute from "./routes/KeycloakRoute"
 import { ROLES } from "./const/roles"
 import GoalDashboard from "./pages/GoalDashboard"
 import ExercisePage from "./pages/ExercisePage"
-import GoalEditor from "./pages/GoalEditor";
+import GoalEditor from "./pages/GoalEditor"
 
 function App() {
   return (

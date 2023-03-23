@@ -13,23 +13,32 @@ function ProfileCard() {
   const [saveMessage, setSaveMessage] = useState(null)
 
   const setProfileDataInVariable = async () => {
+    setUserProfile([])
     const [error, data] = await checkProfile(
       keycloak.token,
       keycloak.tokenParsed.sub
     )
+    console.log(data)
     setUserProfile(data)
     if (error !== null) {
       setApiError(error)
     }
+    console.log(userProfile)
   }
 
   const goBackToProfileAndUpdateData = () => {
-    setActiveProfileCard("Profile")
+    setActiveProfileCard()
     setProfileDataInVariable()
+    setApiError(null)
+    setSaveMessage(null)
   }
 
   useEffect(() => {
     setProfileDataInVariable()
+    console.log(userProfile)
+    if (userProfile.id !== undefined) {
+      setActiveProfileCard("Profile")
+    }
   }, [])
 
   if (userProfile.id === undefined) return <p>loading</p>
@@ -70,7 +79,6 @@ function ProfileCard() {
       {activeProfileCard === "EditImpairments" && (
         <ImpairmentEdit
           setApiError={setApiError}
-          setSaveMessage={setSaveMessage}
           goBackToProfileAndUpdateData={goBackToProfileAndUpdateData}
           userProfile={userProfile}
         />

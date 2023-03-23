@@ -11,7 +11,7 @@ import {
 } from "@mui/material"
 import GoalListItem from "../goals/goalList/GoalListItem"
 import ImpairmentListItem from "../impairments/ImpairmentListItem"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 let currentGoals = []
 function ProfileInfo(props) {

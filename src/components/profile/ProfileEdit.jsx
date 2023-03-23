@@ -22,11 +22,11 @@ function ProfileEdit(props) {
       height
     )
     if (message === "success") {
-      props.setsaveMessage("Profile Saved")
+      props.setSaveMessage("Profile Saved")
       props.setApiError(null)
     } else {
       props.setApiError(message)
-      props.setsaveMessage(null)
+      props.setSaveMessage(null)
     }
   }
   return (
