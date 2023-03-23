@@ -15,9 +15,30 @@ function App() {
       <main className="container">
         <Routes>
           <Route path="/" element={<StartPage />} />
-          <Route path="/goaldashboard" element={<GoalDashboard />} />
-          <Route path="/exercise" element={<ExercisePage />} />
-          <Route path="/goaleditor" element={<GoalEditor />} />
+          <Route
+            path="/goaldashboard"
+            element={
+              <KeycloakRoute role={ROLES.User}>
+                <GoalDashboard />
+              </KeycloakRoute>
+            }
+          />
+          <Route
+            path="/exercise"
+            element={
+              <KeycloakRoute role={ROLES.User}>
+                <ExercisePage />
+              </KeycloakRoute>
+            }
+          />
+          <Route
+            path="/goaleditor"
+            element={
+              <KeycloakRoute role={ROLES.User}>
+                <GoalEditor />
+              </KeycloakRoute>
+            }
+          />
           <Route
             path="/profile"
             element={

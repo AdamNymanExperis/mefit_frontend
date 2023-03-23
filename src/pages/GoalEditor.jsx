@@ -1,7 +1,6 @@
 import GoalEditorCard from "../components/goals/goalEditor/GoalEditorCard"
 
 function GoalEditor() {
-    return <GoalEditorCard />;
+  return <GoalEditorCard />
 }
-export default GoalEditor;
-  
+export default GoalEditor
