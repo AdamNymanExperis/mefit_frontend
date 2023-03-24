@@ -7,7 +7,6 @@ import {
   Button,
   Slide,
   List,
-  Box,
 } from "@mui/material"
 import GoalListItem from "../goals/goalList/GoalListItem"
 import ImpairmentListItem from "../impairments/ImpairmentListItem"

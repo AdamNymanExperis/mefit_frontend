@@ -9,8 +9,9 @@ import ImpairmentEdit from "../impairments/ImpairmentEdit"
 function ProfileCard() {
   const [userProfile, setUserProfile] = useState([])
   const [apiError, setApiError] = useState(null)
-  const [activeProfileCard, setActiveProfileCard] = useState("Profile")
   const [saveMessage, setSaveMessage] = useState(null)
+  const [activeProfileCard, setActiveProfileCard] = useState("Profile")
+  
 
   const setProfileDataInVariable = async () => {
     setUserProfile([])
@@ -23,7 +24,7 @@ function ProfileCard() {
     if (error !== null) {
       setApiError(error)
     }
-
+    
     console.log(userProfile)
   }
 

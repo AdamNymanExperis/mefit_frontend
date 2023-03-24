@@ -8,7 +8,7 @@ import {
 import { FitnessCenter } from "@mui/icons-material"
 import { getWorkoutByUrl } from "../../../api/workout"
 
-const WorkoutListItem = ({ workoutUrl /*,index, updateComplete*/ }) => {
+const WorkoutListItem = ({ workoutUrl, setAchieved }) => {
   const [workout, setWorkout] = useState({})
   const [completed, setCompleted] = useState(false)
   useEffect(() => {
@@ -16,16 +16,19 @@ const WorkoutListItem = ({ workoutUrl /*,index, updateComplete*/ }) => {
       const workoutData = await getWorkoutByUrl(workoutUrl)
       setWorkout(workoutData[1])
       setCompleted(workoutData[1].complete)
+      if(workoutData[1].complete == false) setAchieved(false)
     }
     callApiForWorkout()
   }, [])
 
+  
   const handleClick = () => {
+    /*
     setCompleted(!completed)
     const temp = workout
     temp.complete = !temp.complete
     setWorkout(temp)
-    //updateComplete(index)
+    if(temp.complete == false) setAchieved(false)*/
   }
 
   if (workout === undefined) {
@@ -38,7 +41,7 @@ const WorkoutListItem = ({ workoutUrl /*,index, updateComplete*/ }) => {
         backgroundColor: completed ? "#a7fa9d" : "#ff5c5c",
         borderRadius: "16px",
       }}
-      onClick={handleClick}
+      href={"http://localhost:3000/displayworkout?workout="+workout.id} //onClick={handleClick}
     >
       <ListItemIcon>
         <FitnessCenter />
