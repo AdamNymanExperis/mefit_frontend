@@ -20,39 +20,47 @@ import { mockGoals } from "../../data/mockData";
 import GoalListItem from "./goalList/GoalListItem";
 import { createGoal, deleteGoal } from "../../api/goal";
 import keycloak from "../../keycloak";
+import { getProfile } from "../../api/profile";
 
 export function FitnessCalendar() {
   const [currentGoals, setCurrentGoals] = useState([])
-  
+  const [loading, setLoading] = useState(true)
+
   useEffect( () => {
     const callApiForGoals = async() => {
-      const data = await getGoalsByProfileId(1) 
+
+      const data = await getGoalsByProfileId(keycloak.tokenParsed.sub) // hämtar bara för id 1
       data[1].forEach(function (element) {
         if(element.achieved) {
-          element.color="#a7fa9d"
+          element.color="#a7fa9d" // green
         } else {
-          element.color ="#ff5c5c"
+          element.color ="#ff5c5c" // red
         }        
       })
-      setCurrentGoals(data[1])
+      setCurrentGoals(data[1]) // visar inte calendar
+      setLoading(false)
     }
     callApiForGoals()
   }, []) 
-
-  useEffect( () => {
-    console.log(...currentGoals)
-  }, [currentGoals]) 
-
-  //--------------------------------------------------------
 
   const addNewGoal = (goal) => {
     setCurrentGoals([...currentGoals, goal])
     console.log(goal.id)
   }
 
-  const removeGoal = () => {
+  const removeGoal = (id) => {
     const newGoals = [...currentGoals] // copy
-    newGoals.splice(currentGoals.length-1, 1) // remove goal, returns the removed goal also
+    let indexToRemove = null
+    for(let i = 0; i < newGoals.length; i++) {
+      if(newGoals[i].id == id) { // dont check for type
+        indexToRemove = i
+      }
+    }
+    console.log(indexToRemove)
+    if(indexToRemove !== null) {
+      let removedGoal = newGoals.splice(indexToRemove, 1) // remove goal, returns the removed goal also
+      console.log(removedGoal)
+    }
     setCurrentGoals(newGoals) // update state
   }
 
@@ -62,31 +70,34 @@ export function FitnessCalendar() {
     return nextWeek
   }
 
-  //-----------------------------------------------------------
-  const handleDateClick = async (selected) => {
-    console.log(selected)
-    const title = prompt("Enter goal title")
-    const calenderApi = selected.view.calendar
-    calenderApi.unselect()
-    // check so date is not back in time
+  const checkDate = (date) => {
+    return new Date(date).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0)
+  }
 
-    if(title) {
-      const goalToPost = {
-        title: title,
-        start: selected.startStr,
-        end: calculateEndDate(selected.startStr),
-        achieved: false,
-        profileId: 1,
-        allDay: selected.allDay,
-        color: "red"
-        }
-      let postedGoal = createGoal(keycloak.token, goalToPost)
-      
-      let test = await Promise.resolve(postedGoal)
-      addNewGoal(test[1])
-      console.log(test)
-      calenderApi.addEvent(test[1])
-      //calenderApi.addEvent(postedGoal) // den här innehåller id för att kunna delete frpn api
+  const handleDateClick = async (selected) => {   
+    if(checkDate(selected.start)) {
+      const title = prompt("Enter goal title")
+      const calenderApi = selected.view.calendar
+      calenderApi.unselect()
+
+      let profile = await Promise.resolve(getProfile(keycloak.token, keycloak.tokenParsed.sub))
+   
+      if(title) {
+        const goalToPost = {
+          title: title,
+          start: selected.startStr,
+          end: calculateEndDate(selected.startStr),
+          achieved: false,
+          profileId: profile[1].id,
+          allDay: selected.allDay,
+          color: "#ff5c5c",
+          }
+        let postedGoal = createGoal(keycloak.token, goalToPost)    
+        let promise = await Promise.resolve(postedGoal)
+        addNewGoal(promise[1])
+        console.log(promise[1])
+        calenderApi.addEvent({...promise[1], color: "#ff5c5c", allDay: true })
+      }
     }
   }
 
@@ -94,20 +105,18 @@ export function FitnessCalendar() {
     console.log(selected)
     if (window.confirm(`Remove  '${selected.event.title}'`)) {
       selected.event.remove()
-      removeGoal()
-      //deleteGoal(keycloak.token, 18) // delete from api
-      // ändra till draggable false ------------------------------------------>
-      // ta bort overlap till false
+      let id = selected.event.id
+      removeGoal(id) // delete from calendar
+      deleteGoal(keycloak.token, id) // delete from api
     }
   }
 
-  if (currentGoals.length === 0) {
-    return <p>Loading goals...</p>;
+  if(loading) {
+    return <p>Loading goals...</p>
   }
 
   return (
     <Box m="20px">
-      {/* <Header title="Calendar" subtitle="Full Calendar Interactive Page" /> */}
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -137,19 +146,18 @@ export function FitnessCalendar() {
               listPlugin,
             ]}
             headerToolbar={{
-              left: "prev,next today",
+              left: "",
               center: "title",
-              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+              right: "prev,next today"
             }}
             initialView="dayGridMonth"
-            editable={true}
+            editable={false}
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
             select={handleDateClick}
             eventClick={handleEventClick}
-            //eventsSet={(events) => setCurrentGoals(events)}
-            initialEvents={[...currentGoals]} // wait for this async
+            initialEvents={[...currentGoals]}
             displayEventTime= {false}
           />
         </Box>

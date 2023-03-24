@@ -4,17 +4,14 @@ import {
   ListItemButton,
   List,
   Collapse,
-  Button
+  Button,
 } from "@mui/material"
-import { ExpandLess, 
-         ExpandMore,
-         Flag,
-         Edit        
-} from "@mui/icons-material"
-import {useState, useEffect} from "react"
+import { ExpandLess, ExpandMore, Flag, Edit } from "@mui/icons-material"
+import { useState, useEffect } from "react"
 import { getGoalById } from "../../../api/goal"
 import ProgramListItem from "./ProgramListItem"
 import GoalToWorkoutAdapter from "./GoalToWorkoutAdapter"
+
 
 const GoalListItem = ({goalId}) => {
 

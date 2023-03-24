@@ -50,7 +50,7 @@ const DrawerComponent = () => {
             </ListItemButton>
           ))}
 
-          {keycloak.tokenParsed.roles.includes("CONTRIBUTOR") && (
+          {keycloak.tokenParsed.roles.includes("USER") && (
             <ListItemButton
               component={Link}
               to={"/contributor"}
