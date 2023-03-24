@@ -3,9 +3,7 @@ import { ListItemButton, ListItemText, LinearProgress } from "@mui/material"
 import { getWorkoutGoalByUrl } from "../../../api/workoutgoal"
 import WorkoutListItem from "./WorkoutListItem"
 
-const GoalToWorkoutAdapter = ({
-  /*index, updateAchieved,*/ workoutGoalUrl,
-}) => {
+const GoalToWorkoutAdapter = ({workoutGoalUrl, setAchieved}) => {
   const [workoutGoal, setWorkoutGoal] = useState({})
 
   useEffect(() => {
@@ -20,11 +18,7 @@ const GoalToWorkoutAdapter = ({
     return <LinearProgress />
   }
   return (
-    <WorkoutListItem
-      workoutUrl={
-        workoutGoal.workout
-      } /* index={index} updateComplete={this.props.updateAchieved}*/
-    />
+    <WorkoutListItem workoutUrl={workoutGoal.workout} setAchieved={setAchieved} />
   )
 }
 export default GoalToWorkoutAdapter

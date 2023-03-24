@@ -6,6 +6,7 @@ import KeycloakRoute from "./routes/KeycloakRoute"
 import { ROLES } from "./const/roles"
 import GoalDashboard from "./pages/GoalDashboard"
 import ExercisePage from "./pages/ExercisePage"
+import DisplayWorkout from "./pages/DisplayWorkout"
 import GoalEditor from "./pages/GoalEditor"
 import ContributorController from "./components/contributor/ContributorController"
 
@@ -37,6 +38,14 @@ function App() {
             element={
               <KeycloakRoute role={ROLES.User}>
                 <GoalEditor />
+              </KeycloakRoute>
+            }
+          />
+          <Route
+            path="/displayworkout"
+            element={
+              <KeycloakRoute role={ROLES.User}>
+                <DisplayWorkout />
               </KeycloakRoute>
             }
           />

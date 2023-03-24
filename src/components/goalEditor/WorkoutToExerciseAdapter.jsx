@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {ListItemButton, ListItemText, LinearProgress} from "@mui/material"
-import { getWorkoutExerciseByUrl } from "../../../api/workoutExercise";
+import { getWorkoutExerciseByUrl } from "../../api/workoutExercise";
 import ExerciseListItem from "./ExerciseListItem"
 
 const WorkoutToExerciseAdapter = ({url}) => {
