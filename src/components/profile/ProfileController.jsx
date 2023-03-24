@@ -11,7 +11,6 @@ function ProfileCard() {
   const [apiError, setApiError] = useState(null)
   const [saveMessage, setSaveMessage] = useState(null)
   const [activeProfileCard, setActiveProfileCard] = useState("Profile")
-  
 
   const setProfileDataInVariable = async () => {
     setUserProfile([])
@@ -24,12 +23,12 @@ function ProfileCard() {
     if (error !== null) {
       setApiError(error)
     }
-    
+
     console.log(userProfile)
   }
 
   const goBackToProfileAndUpdateData = () => {
-    setActiveProfileCard()
+    setActiveProfileCard("Profile")
     setProfileDataInVariable()
     setApiError(null)
     setSaveMessage(null)

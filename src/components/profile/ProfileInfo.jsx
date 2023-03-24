@@ -22,7 +22,7 @@ function ProfileInfo(props) {
     )
   }, [props.userProfile.goals])
 
-  if (currentGoals.length <= 0) return <p>Loading</p>
+  if (currentGoals === undefined) return <p>Loading</p>
   return (
     <div>
       <Slide direction="right" in appear>
