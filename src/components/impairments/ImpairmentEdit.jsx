@@ -17,8 +17,7 @@ function ImpairmentEdit(props) {
   const [currentImpairments, setCurrentImpairments] = useState([])
 
   const SaveImpairments = async (impairments) => {
-    console.log(impairments)
-    let message = await updateImpairmentsIntoProfile(
+    await updateImpairmentsIntoProfile(
       keycloak.token,
       keycloak.tokenParsed.sub,
       impairments

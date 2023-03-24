@@ -42,7 +42,6 @@ const GoalListItem = ({ goalId }) => {
       const data = await getGoalById(id)
       setGoal(data[1])
     }
-    console.log(goalId)
     callApiForGoal(goalId)
   }, [])
 
