@@ -44,7 +44,6 @@ function ContributorCreateWorkout(props) {
       type: type,
       complete: false,
     }
-    console.log(workout.name)
     const [error, data] = await createWorkout(keycloak.token, workout)
     if (data !== undefined) {
       props.setSaveMessage("Workout Created")
@@ -55,7 +54,6 @@ function ContributorCreateWorkout(props) {
       async (x) => await postWorkoutExercise(keycloak.token, x, data.id)
     )
 
-    console.log(workoutExerciseData)
     workoutExerciseData.map((x) =>
       x.then((value) => {
         workoutExerciseid = value[1].id
