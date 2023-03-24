@@ -155,6 +155,7 @@ export function FitnessCalendar() {
             selectable={true}
             selectMirror={true}
             dayMaxEvents={true}
+            eventTextColor={"black"}
             select={handleDateClick}
             eventClick={handleEventClick}
             initialEvents={[...currentGoals]}
