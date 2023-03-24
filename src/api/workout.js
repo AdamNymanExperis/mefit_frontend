@@ -79,3 +79,27 @@ export const updateExerciseIntoWorkout = async (
   }
 }
 
+export const updateWorkoutData = async (
+  token,
+  workoutId,
+  name,
+  type,
+  complete
+) => {
+  try {
+    const response = await axios.put(`${apiUrl}/api/v1/workout/${workoutId}`, {
+      headers: { Authorization: `Bearer  ${token}` },
+      id: workoutId,
+      name: name,
+      type: type,
+      complete: complete,
+    })
+    if (!response.status === "200") {
+      throw new Error(response.error)
+    }
+    return "success"
+  } catch (e) {
+    return e.message
+  }
+}
+

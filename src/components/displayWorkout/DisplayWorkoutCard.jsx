@@ -6,7 +6,7 @@ import {useState, useEffect} from "react"
 import keycloak from "../../keycloak"
 import { updateGoal } from "../../api/goal"
 import dayjs from 'dayjs'
-import { getWorkoutById } from "../../api/workout";
+import { getWorkoutById, updateWorkoutData } from "../../api/workout";
 import { getWorkoutExerciseByUrl } from "../../api/workoutExercise";
 import { getExerciseByUrl } from "../../api/exercise";
 import ExerciseListItem from "../exercises/ExerciseListItem";
@@ -48,10 +48,11 @@ function DisplayWorkoutCard() {
 
     useEffect( () => {
         const callApiToUpdateWorkout = async () => {
-            
-        }
+            await updateWorkoutData(keycloak.token, workout.id, workout.name, workout.type, complete)
+            console.log("updated")
+        }   
         callApiToUpdateWorkout()
-    }, [])
+    }, [complete])
 
     const [selected, setSelected] = useState(null);
     
