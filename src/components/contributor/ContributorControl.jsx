@@ -41,7 +41,7 @@ function ContributorControl(props) {
               marginTop: 2,
               marginLeft: 2,
             }}
-            onClick={() => console.log("Create WorkOut")}
+            onClick={() => props.setActiveProfileCard("CreateWorkout")}
           >
             Workout
           </Button>

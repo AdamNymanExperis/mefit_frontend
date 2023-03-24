@@ -1,6 +1,7 @@
 import { useState } from "react"
 import ContributorControl from "./ContributorControl"
-import CreateExercise from "./CreateExercise"
+import ContributorCreateExercise from "./ContributorCreateExercise"
+import ContributorCreateWorkout from "./ContributorCreateWorkout"
 import { Alert, Slide } from "@mui/material"
 
 function ContributorController() {
@@ -36,7 +37,14 @@ function ContributorController() {
         <ContributorControl setActiveProfileCard={setActiveProfileCard} />
       )}
       {activeProfileCard === "CreateExercise" && (
-        <CreateExercise
+        <ContributorCreateExercise
+          goBackToContributorControl={goBackToContributorControl}
+          setSaveMessage={setSaveMessage}
+          setApiError={setApiError}
+        />
+      )}
+      {activeProfileCard === "CreateWorkout" && (
+        <ContributorCreateWorkout
           goBackToContributorControl={goBackToContributorControl}
           setSaveMessage={setSaveMessage}
           setApiError={setApiError}

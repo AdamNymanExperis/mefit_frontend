@@ -6,15 +6,14 @@ import { useEffect, useState } from "react"
 import { getImpairments } from "../../api/impairment"
 import { updateImpairmentsIntoProfile } from "../../api/profile"
 
-const columns = [
-  { field: "Id", headerName: "ID", width: 90 },
-  { field: "name", headerName: "Name", width: 150 },
-  { field: "description", headerName: "Description", width: 150 },
-]
-
 function ImpairmentEdit(props) {
   const [impairmentRows, setImpairmentRows] = useState([])
   const [currentImpairments, setCurrentImpairments] = useState([])
+  const columns = [
+    { field: "Id", headerName: "ID", width: 90 },
+    { field: "name", headerName: "Name", width: 150 },
+    { field: "description", headerName: "Description", width: 150 },
+  ]
 
   const SaveImpairments = async (impairments) => {
     await updateImpairmentsIntoProfile(
