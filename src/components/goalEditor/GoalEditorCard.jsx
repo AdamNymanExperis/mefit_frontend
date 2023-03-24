@@ -1,28 +1,26 @@
-import {Card, Slide, Grid, Paper, TextField, userProfile, Label, Button } from "@mui/material"
+import {Card, Slide, Grid, Paper, TextField, userProfile, Label, Button, Checkbox } from "@mui/material"
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import {useState, useEffect} from "react"
-import keycloak from "../../../keycloak"
-import { updateGoal } from "../../../api/goal"
+import keycloak from "../../keycloak"
+import { updateGoal } from "../../api/goal"
 
 import dayjs from 'dayjs'
 
 
 
-function GoalEditorCard({goal, setGoal, setActiveEditorCard}) {
+function GoalEditorCard({goal, setGoal, setActiveEditorCard, achievedFromController}) {
     
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
+    const [achieved, setAchieved] = useState(true)
 
     const handleSave = async () => {
       const tempGoal = goal
-      console.log(tempGoal.start)
-      console.log(tempGoal.end)
       if(start === undefined) tempGoal.start = goal.start; else tempGoal.start = await handleDateFromDatepicker(start);
       if(end === undefined) tempGoal.end = goal.end; else tempGoal.end = await handleDateFromDatepicker(end);
-      console.log(tempGoal.start)
-      console.log(tempGoal.end)
+      if(achieved === undefined) tempGoal.achieved = goal.achieved; else tempGoal.achieved = achieved;
       const data = await updateGoal(keycloak.token, tempGoal, goal.id)
       setGoal(tempGoal)
     }
@@ -36,8 +34,6 @@ function GoalEditorCard({goal, setGoal, setActiveEditorCard}) {
       let stringDay
       if(day < 10) stringDay = "0"+day
       else stringDay = day
-
-
 
       const months = new Map()
       months.set('Jan', "01")
@@ -64,8 +60,8 @@ function GoalEditorCard({goal, setGoal, setActiveEditorCard}) {
     const handleWorkout = () => {
       setActiveEditorCard("workoutEditor")
     }
-
-    if(goal === undefined) {
+    
+    if(goal === undefined || achievedFromController === undefined ) {
       return <p>loading</p>
     }
     return(
@@ -87,6 +83,9 @@ function GoalEditorCard({goal, setGoal, setActiveEditorCard}) {
               <DatePicker defaultValue={dayjs(goal.end.split("T")[0])} onChange={(newValue) => setEnd(newValue)}/>
             </LocalizationProvider> 
           </Grid>
+          <Grid item={true} xs={12}>
+            <span>Goal achieved: </span><Checkbox checked={achieved} onChange={(newValue) => setAchieved(!achieved)}/>
+          </Grid>
           <Grid item={true} xs={8}>
             <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }} onClick={handleSave}>Save</Button>
           </Grid>
@@ -94,7 +93,7 @@ function GoalEditorCard({goal, setGoal, setActiveEditorCard}) {
             {goal.fitnessProgramGoals?.length <= 0 && <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }} onClick={handleWorkout}>Workouts</Button>}
           </Grid>
           <Grid item={true} xs={2}>
-            {goal.workoutGoals?.length <= 0 && <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }}  onClick={handleProgram}>Programs</Button>}
+            {goal.workoutGoals?.length <= 0 && <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }}  onClick={handleProgram}>Program</Button>}
           </Grid>
         </Grid>
       </Paper>  

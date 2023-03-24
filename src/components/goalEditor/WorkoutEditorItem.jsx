@@ -15,10 +15,11 @@ import { ExpandLess,
     Add
 } from "@mui/icons-material"
 import WorkoutToExerciseAdapter from "./WorkoutToExerciseAdapter"
-import keycloak from "../../../keycloak";
-import { createWorkoutGoal } from "../../../api/workoutgoal";
+import keycloak from "../../keycloak";
+import { createWorkoutGoal } from "../../api/workoutgoal";
+import { deleteWorkoutGoalByUrl }  from "../../api/workoutgoal"
 
-const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoal}) => {
+const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoal, index}) => {
     const [workout, setWorkout] = useState()
     const [open, setOpen] = useState(false);
 
@@ -26,9 +27,18 @@ const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoa
       setOpen(!open);
     };
 
-    const handleDelete = (event) => {
+    const handleDelete = async (event) => {
       event.preventDefault();
       event.stopPropagation();
+      if(index >= 0){
+        await deleteWorkoutGoalByUrl(goal.workoutGoals[index], keycloak.token)
+        
+        const tempGoal = goal
+        tempGoal.workoutGoals.splice(index,1)
+        
+        setWorkoutGoals([...tempGoal.workoutGoals])
+        setGoal(tempGoal)
+      }  
     };
 
     const handleAdd = async (event) => {
@@ -39,8 +49,8 @@ const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoa
       const newWorkoutGoalString = "api/v1/workoutGoal/" + newWorkoutGoal[1].id
       const tempGoal = goal
       tempGoal.workoutGoals = [...goal.workoutGoals, newWorkoutGoalString]
-      
       setWorkoutGoals(tempGoal.workoutGoals)
+      setGoal(tempGoal)
     };
 
     const handleEdit = (event) => {
@@ -50,7 +60,7 @@ const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoa
 
     useEffect( () => {
       setWorkout(workoutObject)
-    }, [])
+    }, [workoutObject])
 
     if(workout === undefined) return <p>loading...</p>
     return <>

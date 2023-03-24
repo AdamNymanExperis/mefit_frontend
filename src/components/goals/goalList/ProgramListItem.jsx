@@ -4,7 +4,7 @@ import { getProgramGoalByUrl } from "../../../api/programGoal";
 import { getProgramByUrl } from "../../../api/program";
 import WorkoutListItem from "./WorkoutListItem"
 
-const ProgramListItem = ({programGoalUrl}) => {
+const ProgramListItem = ({programGoalUrl, setAchieved}) => {
     const [program, setProgram] = useState({})
 
     useEffect( () => {
@@ -20,7 +20,7 @@ const ProgramListItem = ({programGoalUrl}) => {
       <List component="div" disablePadding>
         {program.workouts?.map(
           (workout, index) => {
-            return <WorkoutListItem key={index} workoutUrl={workout}/>
+            return <WorkoutListItem key={index} workoutUrl={workout} setAchieved={setAchieved}/>
           }
         )}
       </List>

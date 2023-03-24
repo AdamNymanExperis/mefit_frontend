@@ -7,6 +7,7 @@ import { ROLES } from "./const/roles"
 import GoalDashboard from "./pages/GoalDashboard"
 import ExercisePage from "./pages/ExercisePage"
 import GoalEditor from "./pages/GoalEditor";
+import DisplayWorkout from "./pages/DisplayWorkout"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/goaldashboard" element={<GoalDashboard />} />
           <Route path="/exercise" element={<ExercisePage />} />
           <Route path="/goaleditor" element={<GoalEditor />} />
+          <Route path="/displayworkout" element={<DisplayWorkout />} />
           <Route
             path="/profile"
             element={

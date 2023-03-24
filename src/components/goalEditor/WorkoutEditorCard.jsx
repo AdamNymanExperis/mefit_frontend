@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {Card, Slide, Grid, Paper, TextField, userProfile, Label, Button, List} from "@mui/material"
 import WorkoutEditorItem from "./WorkoutEditorItem"
-import { getWorkouts } from "../../../api/workout"
+import { getWorkouts } from "../../api/workout"
 import GoalToWorkoutEditorItemAdapter from "./GoalToWorkoutEditorItemAdapter"
 
 const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
@@ -18,10 +18,6 @@ const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
     setWorkoutGoals(goal.workoutGoals)
   }, [])
 
-  const handleSave = () => {
-    // put
-  }
-
   const handleBack = () => {
     setActiveEditorCard("goalEditor")
   }
@@ -34,9 +30,9 @@ const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
       </Grid>
       <Grid item={true} xs={6}>
         <List>
-          {workoutGoals.map(
+          { workoutGoals.map(
             (workoutGoal, index) => {
-              return <GoalToWorkoutEditorItemAdapter key={index} workoutGoalUrl={workoutGoal} goal={goal} setGoal={setGoal} setWorkoutGoals={setWorkoutGoals} inGoal={true} />
+              return <GoalToWorkoutEditorItemAdapter key={index} workoutGoalUrl={workoutGoal} goal={goal} setGoal={setGoal} setWorkoutGoals={setWorkoutGoals} index={index} inGoal={true} />
             }
           )}
         </List>
@@ -45,15 +41,12 @@ const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
       <List>
           {workouts.map(
             (workout, index) => {
-              return <WorkoutEditorItem key={index} workoutObject={workout} goal={goal} setGoal={setGoal} setWorkoutGoals={setWorkoutGoals} inGoal={false} />
+              return <WorkoutEditorItem key={index} workoutObject={workout} goal={goal} setGoal={setGoal} setWorkoutGoals={setWorkoutGoals} inGoal={false} index={-1}/>
             }
           )}
         </List>
       </Grid>
-      <Grid item={true} xs={10}>
-        <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }} onClick={handleSave}>Save</Button>
-      </Grid>
-      <Grid item={true} xs={2}>
+      <Grid item={true} xs={12}>
         <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }}  onClick={handleBack}>Back</Button>
       </Grid>
     </Grid>
@@ -61,5 +54,3 @@ const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
 }
     
 export default WorkoutEditorCard;
-
-//{goal.workoutGoals?.map(

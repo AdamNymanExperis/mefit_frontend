@@ -15,12 +15,12 @@ import { ExpandLess,
     Edit,
     FitnessCenter      
 } from "@mui/icons-material"
-import { getWorkoutGoalByUrl } from "../../../api/workoutgoal";
-import { getWorkoutByUrl } from "../../../api/workout";
+import { getWorkoutGoalByUrl } from "../../api/workoutgoal";
+import { getWorkoutByUrl } from "../../api/workout";
 import WorkoutToExerciseAdapter from "./WorkoutToExerciseAdapter"
 import WorkoutEditorItem from "./WorkoutEditorItem"
 
-const GoalToWorkoutEditorItemAdapter = ({workoutGoalUrl, goal, setGoal, setWorkoutGoals, inGoal}) => {
+const GoalToWorkoutEditorItemAdapter = ({workoutGoalUrl, goal, setGoal, setWorkoutGoals, inGoal, index}) => {
     const [workout, setWorkout] = useState()
 
     useEffect( () => {
@@ -30,10 +30,10 @@ const GoalToWorkoutEditorItemAdapter = ({workoutGoalUrl, goal, setGoal, setWorko
         setWorkout(workoutData[1])
       }
       callApi(workoutGoalUrl)
-    }, [])
+    }, [workoutGoalUrl])
 
     if(workout === undefined) return <p>loading...</p>
-    return <WorkoutEditorItem workoutObject={workout} goal={goal} setGoal={setGoal} setWorkoutGoals={setWorkoutGoals} inGoal={inGoal} />
+    return <WorkoutEditorItem workoutObject={workout} goal={goal} setGoal={setGoal} setWorkoutGoals={setWorkoutGoals} inGoal={inGoal} index={index} />
 }
     
 export default GoalToWorkoutEditorItemAdapter;

@@ -1,7 +1,5 @@
 import {
-  ListItem,
   ListItemText,
-  Stack,
   ListItemIcon,
   ListItemButton,
   List,
@@ -20,27 +18,14 @@ import GoalToWorkoutAdapter from "./GoalToWorkoutAdapter"
 
 const GoalListItem = ({goalId}) => {
 
+  const [foundGoal, setGoal] = useState({})
   const [open, setOpen] = useState(false);
-  const [achievedArr, setAchievedArr] = useState([]);
-  //const [achieved, setAchieved] = useState(false);
-
-  /*
-  const updateAchieved = (index) => {
-    const temp = achievedArr
-    temp[index] = !temp[index]
-    setAchievedArr(temp)
-    let isAchieved = true
-    temp.forEach( (i) => {
-      if(!temp[i]) isAchieved = false
-    })
-    setAchieved(isAchieved)
-  }*/
+  const [achieved, setAchieved] = useState(true);
+  const [firstTime, setFirstTime] = useState(true);
 
   const handleClick = () => {
     setOpen(!open);
-  };
-
-  const [foundGoal, setGoal] = useState({})
+  }
     
   useEffect( () => {
     const callApiForGoal = async(id) => {
@@ -50,7 +35,8 @@ const GoalListItem = ({goalId}) => {
     callApiForGoal(goalId)
   }, [])
 
-  return <><ListItemButton onClick={handleClick} sx={{ backgroundColor: foundGoal.achieved? "#a7fa9d" : "#ff5c5c"}}>
+  return <>
+  <ListItemButton onClick={handleClick} sx={{ backgroundColor: foundGoal.achieved? "#a7fa9d" : "#ff5c5c"}}>
     <ListItemIcon>
       <Flag />
     </ListItemIcon>
@@ -63,40 +49,15 @@ const GoalListItem = ({goalId}) => {
     <List component="div" disablePadding>
       {foundGoal.workoutGoals?.map(
         (workoutGoal, index) => {
-          //setAchievedArr([...achievedArr, false])
-          return <GoalToWorkoutAdapter key={index} workoutGoalUrl={workoutGoal} /*index={index} updateComplete={updateAchieved}*//> 
+          return <GoalToWorkoutAdapter key={index} workoutGoalUrl={workoutGoal} setAchieved={setAchieved}/> 
         }
       )}
     </List>
-    {foundGoal.fitnessProgramGoals?.length > 0 && <ProgramListItem programGoalUrl={foundGoal.fitnessProgramGoals[0]} />}
+    {foundGoal.fitnessProgramGoals?.length > 0 && <ProgramListItem programGoalUrl={foundGoal.fitnessProgramGoals[0]} setAchieved={setAchieved}/>}
     
     <Button href={"http://localhost:3000/goaleditor?goal="+foundGoal.id} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
   </Collapse>
   </>
 }
-
-/*<ListItem
-    key={goal.id}
-    sx={{
-  // backgroundColor: colors.greenAccent[500],
-    margin: "10px 0",
-    borderRadius: "2px",
-    }}
-  >
-  <ListItemText
-    primary={goal.title}
-    /*
-                  secondary={
-                    {<Typography>
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </Typography>}
-                  } 
-                  />    
-    
-                  </ListItem>*/ 
 
 export default GoalListItem

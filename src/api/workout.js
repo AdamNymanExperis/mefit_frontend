@@ -26,3 +26,16 @@ export const getWorkoutByUrl = async (workoutUrl) => {
       return [error.message, []]
     }
   }  
+
+export const getWorkoutById = async (workoutId) => {
+  const response = await axios.get(`${apiUrl}/api/v1/workout/${workoutId}`)
+  try {
+    if (!response.status === 200) {
+      throw new Error("workout not found")
+    }
+    const data = response.data
+    return [null, data]
+  } catch (error) {
+    return [error.message, []]
+  }
+}

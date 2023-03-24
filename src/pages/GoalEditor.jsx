@@ -1,4 +1,4 @@
-import GoalEditorController from "../components/goals/goalEditor/GoalEditorController"
+import GoalEditorController from "../components/goalEditor/GoalEditorController"
 
 function GoalEditor() {
     return <GoalEditorController />;
