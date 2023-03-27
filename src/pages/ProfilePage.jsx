@@ -1,31 +1,6 @@
-import keycloak from "../keycloak";
-import { useEffect } from "react";
-import { getUser } from "../api/user"; 
+import ProfileController from "../components/profile/ProfileController"
 
 function ProfilePage() {
-
-  useEffect( () => {
-    const pingBackend = async() => {
-      const data = await getUser(keycloak.token) 
-      console.log(data)
-    }
-    pingBackend()
-  }, [])
-
-  return (
-    <div>
-      <h1>Profile Page</h1>
-      { keycloak.tokenParsed &&
-       <div>
-          <h4>User</h4>
-          
-            <p>Name: { keycloak.tokenParsed.name}</p>
-            <p>Username: { keycloak.tokenParsed.preferred_username}</p>
-            <p>Sub: { keycloak.tokenParsed.sub }</p>
-          
-         </div>
-      }
-    </div>
-  );
+  return <ProfileController />
 }
-export default ProfilePage;
+export default ProfilePage

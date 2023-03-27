@@ -1,13 +1,19 @@
-import keycloak from "../keycloak";
-
+import keycloak from "../keycloak"
+import { checkProfile } from "../api/profile"
 /**
  * Example Start Page using Keycloak Context.
  */
 function StartPage() {
+  const callApiForCheckUser = async () => {
+    await checkProfile(keycloak.token, keycloak.tokenParsed.sub)
+  }
+  if (keycloak.authenticated) {
+    callApiForCheckUser()
+  }
+
   return (
     <div>
       <h1>Start Page</h1>
-
       <section className="actions">
         {!keycloak.authenticated && (
           <button onClick={() => keycloak.login()}>Login</button>
@@ -24,6 +30,6 @@ function StartPage() {
         </div>
       )}
     </div>
-  );
+  )
 }
-export default StartPage;
+export default StartPage
