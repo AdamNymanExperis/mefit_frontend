@@ -11,7 +11,7 @@ import { useState, useEffect } from "react"
 import { getGoalById } from "../../../api/goal"
 import ProgramListItem from "./ProgramListItem"
 import GoalToWorkoutAdapter from "./GoalToWorkoutAdapter"
-const apiUrl = process.env.REACT_APP_API_URL
+const domainUrl = process.env.REACT_APP_DOMAIN_URL
 
 const GoalListItem = ({goalId}) => {
 
@@ -52,7 +52,7 @@ const GoalListItem = ({goalId}) => {
     </List>
     {foundGoal.fitnessProgramGoals?.length > 0 && <ProgramListItem programGoalUrl={foundGoal.fitnessProgramGoals[0]} setAchieved={setAchieved}/>}
     
-    <Button href={`${apiUrl}/goaleditor?goal=${foundGoal.id}`} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
+    <Button href={`${domainUrl}/goaleditor?goal=${foundGoal.id}`} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
   </Collapse>
   </>
 }

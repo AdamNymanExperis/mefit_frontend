@@ -7,7 +7,7 @@ import {
 } from "@mui/material"
 import { FitnessCenter } from "@mui/icons-material"
 import { getWorkoutByUrl } from "../../../api/workout"
-const apiUrl = process.env.REACT_APP_API_URL
+const domainUrl = process.env.REACT_APP_DOMAIN_URL
 
 const WorkoutListItem = ({ workoutUrl, setAchieved }) => {
   const [workout, setWorkout] = useState({})
@@ -42,7 +42,7 @@ const WorkoutListItem = ({ workoutUrl, setAchieved }) => {
         backgroundColor: completed ? "#a7fa9d" : "#ff5c5c",
         borderRadius: "16px",
       }}
-      href={`${apiUrl}/displayworkout?workout=${workout.id}`} //onClick={handleClick}
+      href={`${domainUrl}/displayworkout?workout=${workout.id}`} //onClick={handleClick}
     >
       <ListItemIcon>
         <FitnessCenter />
