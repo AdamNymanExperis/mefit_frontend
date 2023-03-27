@@ -42,7 +42,7 @@ const WorkoutListItem = ({ workoutUrl, setAchieved }) => {
         backgroundColor: completed ? "#a7fa9d" : "#ff5c5c",
         borderRadius: "16px",
       }}
-      href={`${apiUrl}displayworkout?workout=${workout.id}`} //onClick={handleClick}
+      href={`${apiUrl}/displayworkout?workout=${workout.id}`} //onClick={handleClick}
     >
       <ListItemIcon>
         <FitnessCenter />
