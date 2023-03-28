@@ -6,7 +6,9 @@ Mefit is an app where user can set up weekly goals and track them. User will als
 
 # Backend And Frontend
 the backend for this project is build i C# and SQL Server for the Database, while Frontend is build in React.js
-You can find the Backend Here [Github MeFit Backend]([https://github.com/AdamNymanExperis/mefit_backend](https://github.com/AdamNymanExperis/mefit_backend))
+
+You can find the Backend Here [Github MeFit Backend](https://github.com/AdamNymanExperis/mefit_backend)
+
 You can find the Frontend Here [Github MeFit Frontend](https://github.com/AdamNymanExperis/mefit_frontend)
 
 # Deployment
