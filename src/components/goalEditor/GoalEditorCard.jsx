@@ -20,6 +20,7 @@ function GoalEditorCard({
 	setActiveEditorCard,
 	achievedFromController,
 }) {
+	const [title, setTitle] = useState();
 	// states holding the start and end dates of the goal
 	const [start, setStart] = useState();
 	const [end, setEnd] = useState();
@@ -29,6 +30,8 @@ function GoalEditorCard({
 	//When clicking the save button the dates and achieve status should be updated in the database
 	const handleSave = async () => {
 		const tempGoal = goal;
+		if (title === undefined) tempGoal.title = goal.title;
+		else tempGoal.title = title;
 		if (start === undefined) tempGoal.start = goal.start;
 		else tempGoal.start = await handleDateFromDatepicker(start);
 		if (end === undefined) tempGoal.end = goal.end;
@@ -94,7 +97,9 @@ function GoalEditorCard({
 					<TextField
 						id="outlined-basic"
 						label={goal.title}
+						defaultValue={goal.title}
 						variant="outlined"
+						onChange={(newValue) => setTitle(newValue.target.value)}
 					/>
 				</Grid>
 				<Grid item={true} xs={4}>
