@@ -4,9 +4,12 @@ import { Grid, Paper, Button, Slide, TextField } from "@mui/material"
 import { changeProfileData } from "../../api/profile"
 
 function ProfileEdit(props) {
+  //Local State
   let [weight, setWeight] = useState("")
   let [height, setHeight] = useState("")
 
+  //handler
+  //Save the new edits
   async function EditProfile() {
     if (weight === "") {
       weight = props.userProfile.weight
@@ -29,6 +32,7 @@ function ProfileEdit(props) {
       props.setSaveMessage(null)
     }
   }
+
   return (
     <div>
       <Slide direction="right" in appear>

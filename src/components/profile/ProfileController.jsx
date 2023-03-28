@@ -7,11 +7,17 @@ import ProfileInfo from "./ProfileInfo"
 import ImpairmentEdit from "../impairments/ImpairmentEdit"
 
 function ProfileCard() {
+  //Local States
   const [userProfile, setUserProfile] = useState([])
+
+  //Error and Success Message Alert state
   const [apiError, setApiError] = useState(null)
   const [saveMessage, setSaveMessage] = useState(null)
+
+  // Control component to show state
   const [activeProfileCard, setActiveProfileCard] = useState("Profile")
 
+  //Get User Profile data
   const setProfileDataInVariable = async () => {
     setUserProfile([])
     const [error, data] = await checkProfile(
@@ -27,6 +33,8 @@ function ProfileCard() {
     console.log(userProfile)
   }
 
+  //Handler
+  //Go back to Profile info component and reset the alert state
   const goBackToProfileAndUpdateData = () => {
     setActiveProfileCard("Profile")
     setProfileDataInVariable()
@@ -34,14 +42,15 @@ function ProfileCard() {
     setSaveMessage(null)
   }
 
+  //side effect
   useEffect(() => {
     setProfileDataInVariable()
-    console.log(userProfile)
     if (userProfile.id !== undefined) {
       setActiveProfileCard("Profile")
     }
   }, [])
 
+  //wait for UserProfile data to get fetched
   if (userProfile.id === undefined) return <p>loading</p>
   return (
     <div>

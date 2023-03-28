@@ -16,13 +16,17 @@ function Navbar() {
         <Toolbar>
           {keycloak.authenticated && <DrawerComponent />}
           <img src={Image} width="40px"></img>
-          <Typography variant="h6" component="div" sx={{ marginLeft: "15px", flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ marginLeft: "15px", flexGrow: 1 }}
+          >
             Me-Fit Application
           </Typography>
           {keycloak.authenticated && keycloak.tokenParsed && (
             <div>
               <Button color="inherit" component={Link} to="/profile">
-                {keycloak.tokenParsed.preferred_username}
+                {keycloak.tokenParsed.name}
               </Button>
               <Button
                 sx={{
