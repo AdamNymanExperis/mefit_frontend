@@ -1,29 +1,38 @@
-import keycloak from "../keycloak";
-
+import keycloak from "../keycloak"
+import { checkProfile } from "../api/profile"
+import {Paper, Button} from "@mui/material"
+import { maxWidth } from "@mui/system"
 /**
  * Example Start Page using Keycloak Context.
  */
 function StartPage() {
-  return (
-    <div>
-      <h1>Start Page</h1>
+  const callApiForCheckUser = async () => {
+    await checkProfile(keycloak.token, keycloak.tokenParsed.sub)
+  }
+  if (keycloak.authenticated) {
+    callApiForCheckUser()
+  }
 
+  return (
+    <Paper sx={{  margin: "auto", marginTop: 10, background: "#E0E1E5", textAlign:"center", padding:"20px", minWidth: 250,
+    maxWidth: 600,}} >
+      {!keycloak.authenticated && (<>
+      <h1>Welcome to Me-Fit!</h1>
+      
       <section className="actions">
-        {!keycloak.authenticated && (
-          <button onClick={() => keycloak.login()}>Login</button>
-        )}
-        {keycloak.authenticated && (
-          <button onClick={() => keycloak.logout()}>Logout</button>
-        )}
-      </section>
+        
+          <Button onClick={() => keycloak.login()} sx={{background: "#2196F3",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "#1769AA"}}} >Login</Button>
+        
+      </section></>
+      )}
 
       {keycloak.token && (
-        <div>
-          <h4>Token</h4>
-          <pre>{keycloak.token}</pre>
-        </div>
+        <h1>Welcome {keycloak.tokenParsed.name}!</h1>
       )}
-    </div>
-  );
+    </Paper>
+  )
 }
-export default StartPage;
+export default StartPage

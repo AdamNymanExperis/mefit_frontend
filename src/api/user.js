@@ -1,7 +1,8 @@
 import axios from "."
+const apiUrl = process.env.REACT_APP_API_URL
 
 export const getUser = async (token) => {
-  const response = await fetch("https://localhost:7234/api/v1/User/1", {
+  const response = await fetch(`${apiUrl}/api/v1/user/1`, {
     headers: { Authorization: `Bearer  ${token}` },
   })
   try {
