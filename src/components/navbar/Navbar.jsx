@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
 import DrawerComponent from "../drawer/Drawer"
 import { Link } from "react-router-dom"
+import Image from "./mefitIcon_white.png"
 
 function Navbar() {
   return (
@@ -14,7 +15,8 @@ function Navbar() {
       <AppBar position="static">
         <Toolbar>
           {keycloak.authenticated && <DrawerComponent />}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <img src={Image} width="40px"></img>
+          <Typography variant="h6" component="div" sx={{ marginLeft: "15px", flexGrow: 1 }}>
             Me-Fit Application
           </Typography>
           {keycloak.authenticated && keycloak.tokenParsed && (

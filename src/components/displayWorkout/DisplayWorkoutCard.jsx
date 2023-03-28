@@ -58,7 +58,7 @@ function DisplayWorkoutCard() {
     
     if(workout === undefined || exercises === undefined) return <p>loading...</p>
     return(
-      <Paper>
+      <Paper sx={{marginTop: 10, background: "#E0E1E5"}}>
         <Grid container sx={{padding:"5px"}}>
           <Grid item={true} xs={4}>
             <ListItem>

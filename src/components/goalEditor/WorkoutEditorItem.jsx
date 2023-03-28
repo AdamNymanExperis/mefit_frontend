@@ -64,22 +64,22 @@ const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoa
 
     if(workout === undefined) return <p>loading...</p>
     return <>
-    <ListItemButton onClick={handleClick} >
+    <ListItemButton onClick={handleClick} sx={{margin:"5px", background: "#2196F3",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1769AA"}}}>
     <ListItemIcon>
-        <FitnessCenter />
+        <FitnessCenter sx={{color: "white"}}/>
     </ListItemIcon>
   <ListItemText primary={workout.name} />
   {inGoal?
   <IconButton aria-label="delete" onClick={handleDelete}>
-    <Delete />
+    <Delete sx={{color: "white"}} />
   </IconButton>
   : 
   <>
   <IconButton aria-label="add" onClick={handleAdd}>
-    <Add />
-  </IconButton>
-  <IconButton aria-label="edit" onClick={handleEdit}>
-    <Edit />
+    <Add sx={{color: "white"}} />
   </IconButton>
   </>
   }
@@ -87,16 +87,16 @@ const WorkoutEditorItem = ({workoutObject, goal, setGoal, setWorkoutGoals, inGoa
   {open ? <ExpandLess /> : <ExpandMore />}
   </ListItemButton>
   
-  <Collapse in={open} timeout="auto" unmountOnExit sx={{ padding: "10px"}}>
+  <Collapse in={open} timeout="auto" unmountOnExit sx={{ borderColor: "#1769AA", padding: "10px"}}>
     {workout.workoutExercises?.length > 0 && <span>exercises:</span>}
-    <List component="div" disablePadding>
+    
       {workout.workoutExercises?.map(
         (workoutExercise, index) => {
           return <WorkoutToExerciseAdapter key={index} url={workoutExercise} /> 
         }
       )}
-    </List>
-    </Collapse></>
+    
+  </Collapse></>
 }
     
 export default WorkoutEditorItem;

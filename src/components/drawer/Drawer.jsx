@@ -10,21 +10,19 @@ import {
 } from "@mui/material"
 import ProfileIcon from "@mui/icons-material/AccountBox"
 import GoalIcon from "@mui/icons-material/Flag"
-import WorkoutIcon from "@mui/icons-material/FitnessCenter"
 import ExerciseIcon from "@mui/icons-material/SportsFootball"
 import HandshakeIcon from "@mui/icons-material/Handshake"
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
 import MenuIcon from "@mui/icons-material/Menu"
 import keycloak from "../../keycloak"
 
-const pages = ["Profile", "Goal", "Workout", "Exercise"]
+const pages = ["Profile", "Goal", "Exercise"]
 const listIcon = [
   <ProfileIcon />,
   <GoalIcon />,
-  <WorkoutIcon />,
   <ExerciseIcon />,
 ]
-const routes = ["/profile", "/goaldashboard", "/workout", "/exercise"]
+const routes = ["/profile", "/goaldashboard", "/exercise"]
 const DrawerComponent = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
 
@@ -50,7 +48,7 @@ const DrawerComponent = () => {
             </ListItemButton>
           ))}
 
-          {keycloak.tokenParsed.roles.includes("USER") && (
+          {keycloak.tokenParsed.roles.includes("CONTRIBUTOR") && (
             <ListItemButton
               component={Link}
               to={"/contributor"}

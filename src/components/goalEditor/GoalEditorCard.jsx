@@ -65,7 +65,7 @@ function GoalEditorCard({goal, setGoal, setActiveEditorCard, achievedFromControl
       return <p>loading</p>
     }
     return(
-      <Paper>
+      <Paper sx={{marginTop: 10, background: "#E0E1E5"}}>
         <Grid container sx={{padding:"5px"}}>
           <Grid item={true} xs={12}>
             <p>Goal Editor:</p>
@@ -87,13 +87,22 @@ function GoalEditorCard({goal, setGoal, setActiveEditorCard, achievedFromControl
             <span>Goal achieved: </span><Checkbox checked={achieved} onChange={(newValue) => setAchieved(!achieved)}/>
           </Grid>
           <Grid item={true} xs={8}>
-            <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }} onClick={handleSave}>Save</Button>
+            <Button sx={{ marginTop: "10px", background: "#2196F3",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1769AA"}}} onClick={handleSave}>Save</Button>
           </Grid>
           <Grid item={true} xs={2}>
-            {goal.fitnessProgramGoals?.length <= 0 && <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }} onClick={handleWorkout}>Workouts</Button>}
+            {goal.fitnessProgramGoals?.length <= 0 && <Button sx={{ marginTop: "10px", background: "#2196F3",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1769AA"}}} onClick={handleWorkout}>Workouts</Button>}
           </Grid>
           <Grid item={true} xs={2}>
-            {goal.workoutGoals?.length <= 0 && <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }}  onClick={handleProgram}>Program</Button>}
+            {goal.workoutGoals?.length <= 0 && <Button sx={{ marginTop: "10px", background: "#2196F3",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1769AA"}}}  onClick={handleProgram}>Program</Button>}
           </Grid>
         </Grid>
       </Paper>  

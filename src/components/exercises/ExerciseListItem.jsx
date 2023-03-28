@@ -18,13 +18,19 @@ const ExerciseListItem = ({exercise, index, selected, setSelected}) => {
                 <div>
                   <p>{exercise.description}</p>
                   { exercise.impairments.length > 0 && 
-                    <p>This exercise could generally also be practised by people with the following impairments:</p>
+                    <p>This exercise should be avoided by people with the following impairments:</p>
                   }
-                  <ul>{exercise.impairments.map((impairment, index) => (
+                  {exercise.impairments.map((impairment, index) => (
                     <ImpairmentListItem key={index} impairmentURL={impairment}/> 
-                  ))}</ul>
+                  ))}
                   { exercise.videoLink !== "" && 
-                    <Button href={exercise.videoLink} sx={{ border:1, borderRadius:"16px" }}>Video</Button>
+                    <Button href={exercise.videoLink} sx={{
+                      background: "#2196f3",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "#1769aa",
+                      },
+                    }}>Video</Button>
                   }
                 </div>
               }

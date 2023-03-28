@@ -41,6 +41,7 @@ const WorkoutListItem = ({ workoutUrl, setAchieved }) => {
         pl: 4,
         backgroundColor: completed ? "#a7fa9d" : "#ff5c5c",
         borderRadius: "16px",
+        "&:hover":{ background: "#dbdbdb"}
       }}
       href={`${domainUrl}/displayworkout?workout=${workout.id}`} //onClick={handleClick}
     >

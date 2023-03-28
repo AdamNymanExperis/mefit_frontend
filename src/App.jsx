@@ -52,7 +52,7 @@ function App() {
           <Route
             path="/contributor"
             element={
-              <KeycloakRoute role={ROLES.User}>
+              <KeycloakRoute role={ROLES.Contributor}>
                 <ContributorController />
               </KeycloakRoute>
             }

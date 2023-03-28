@@ -59,19 +59,22 @@ const ProgramEditorItem = ({programObject, goal, setGoal, setProgramGoals, inGoa
 
     if(program === undefined) return <p>loading...</p>
     return <>
-    <ListItemButton>
+    <ListItemButton sx={{background: "#2196F3",
+                  color: "white", margin: "5px",
+                  "&:hover": {
+                    backgroundColor: "#1769AA"}}}>
     <ListItemIcon>
-        <Event />
+        <Event  sx={{color: "white"}}/>
     </ListItemIcon>
   <ListItemText primary={program.name} />
   {inGoal?
   <IconButton aria-label="delete" onClick={handleDelete}>
-    <Delete />
+    <Delete sx={{color: "white"}} />
   </IconButton>
   : 
   <>
   <IconButton aria-label="add" onClick={handleAdd}>
-    <CompareArrows/>
+    <CompareArrows sx={{color: "white"}} />
   </IconButton>
   </>
   }

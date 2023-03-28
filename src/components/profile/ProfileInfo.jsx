@@ -51,9 +51,8 @@ function ProfileInfo(props) {
                       component="div"
                     >
                       <p>Name: {keycloak.tokenParsed.name}</p>
-                      <p>Username: {keycloak.tokenParsed.preferred_username}</p>
-                      <p>Weight: {props.userProfile.weight}</p>
-                      <p>Height: {props.userProfile.height}</p>
+                      <p>Weight: {props.userProfile.weight} kg</p>
+                      <p>Height: {props.userProfile.height} cm</p>
                     </Typography>
                   )}
                 </Grid>

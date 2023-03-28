@@ -52,7 +52,8 @@ const GoalListItem = ({goalId}) => {
     </List>
     {foundGoal.fitnessProgramGoals?.length > 0 && <ProgramListItem programGoalUrl={foundGoal.fitnessProgramGoals[0]} setAchieved={setAchieved}/>}
     
-    <Button href={`${domainUrl}/goaleditor?goal=${foundGoal.id}`} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px" }}>Edit Goal</Button>
+    <Button href={`${domainUrl}/goaleditor?goal=${foundGoal.id}`} endIcon={<Edit />} sx={{ marginTop: "10px", backgroundColor: "white", border: 2, borderRadius: "16px", color: "black", 
+    "&:hover": {background: "#dbdbdb"}}}>Edit Goal</Button>
   </Collapse>
   </>
 }

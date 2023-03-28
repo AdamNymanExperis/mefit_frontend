@@ -50,7 +50,7 @@ function ProfileEdit(props) {
                   required
                   id="outlined-required"
                   defaultValue={props.userProfile.weight}
-                  label="Current Weight"
+                  label="Current Weight (in kg)"
                   onChange={(e) => {
                     setWeight(e.target.value)
                   }}
@@ -59,7 +59,7 @@ function ProfileEdit(props) {
                 <TextField
                   required
                   id="outlined-required"
-                  label="Current Height"
+                  label="Current Height (in cm)"
                   defaultValue={props.userProfile.height}
                   sx={{ marginTop: 2 }}
                   onChange={(e) => {

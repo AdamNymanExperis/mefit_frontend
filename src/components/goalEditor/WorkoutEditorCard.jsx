@@ -23,7 +23,7 @@ const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
   }
 
   if(workouts === undefined){ return <p>loading...</p>}
-  return <Paper>
+  return <Paper sx={{marginTop: 10, background: "#E0E1E5"}}>
     <Grid container sx={{padding:"5px"}}>
       <Grid item={true} xs={12}>
         <p>Goal Editor:</p>
@@ -47,7 +47,10 @@ const WorkoutEditorCard = ({goal, setGoal, setActiveEditorCard}) => {
         </List>
       </Grid>
       <Grid item={true} xs={12}>
-        <Button sx={{ marginTop: "10px", backgroundColor: "white", border: 1, borderRadius: "16px" }}  onClick={handleBack}>Back</Button>
+        <Button sx={{ margin: "10px", background: "#2196F3",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#1769AA"} }}  onClick={handleBack}>Back</Button>
       </Grid>
     </Grid>
   </Paper> 
