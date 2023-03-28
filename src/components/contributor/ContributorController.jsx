@@ -5,14 +5,15 @@ import ContributorCreateWorkout from "./ContributorCreateWorkout"
 import { Alert, Slide } from "@mui/material"
 
 function ContributorController() {
-  const [activeProfileCard, setActiveProfileCard] = useState(
+  //local State
+  const [activeContributorCard, setActiveContributorCard] = useState(
     "ContributorControls"
   )
   const [apiError, setApiError] = useState(null)
   const [saveMessage, setSaveMessage] = useState(null)
 
   const goBackToContributorControl = () => {
-    setActiveProfileCard("ContributorControls")
+    setActiveContributorCard("ContributorControls")
     setApiError(null)
     setSaveMessage(null)
   }
@@ -33,17 +34,19 @@ function ContributorController() {
           </Alert>
         </Slide>
       )}
-      {activeProfileCard === "ContributorControls" && (
-        <ContributorControl setActiveProfileCard={setActiveProfileCard} />
+      {activeContributorCard === "ContributorControls" && (
+        <ContributorControl
+          setActiveContributorCard={setActiveContributorCard}
+        />
       )}
-      {activeProfileCard === "CreateExercise" && (
+      {activeContributorCard === "CreateExercise" && (
         <ContributorCreateExercise
           goBackToContributorControl={goBackToContributorControl}
           setSaveMessage={setSaveMessage}
           setApiError={setApiError}
         />
       )}
-      {activeProfileCard === "CreateWorkout" && (
+      {activeContributorCard === "CreateWorkout" && (
         <ContributorCreateWorkout
           goBackToContributorControl={goBackToContributorControl}
           setSaveMessage={setSaveMessage}

@@ -11,12 +11,14 @@ import { createExercise } from "../../api/exercise"
 import keycloak from "../../keycloak"
 
 function ContributorCreateExercise(props) {
+  //LocalState Exercise Infos
   let [name, setName] = useState(null)
   let [description, setDescription] = useState(null)
   let [targetMuscleGroup, setTargetMuscleGroup] = useState(null)
   let [imageLink, setImageLink] = useState(null)
   let [videoLink, setVideoLink] = useState(null)
 
+  //Create Exercise
   const SaveExercise = async () => {
     props.setSaveMessage(null)
     const exercise = {

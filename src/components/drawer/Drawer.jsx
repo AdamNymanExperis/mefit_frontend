@@ -8,21 +8,24 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material"
-import ProfileIcon from "@mui/icons-material/AccountBox"
-import GoalIcon from "@mui/icons-material/Flag"
-import ExerciseIcon from "@mui/icons-material/SportsFootball"
-import HandshakeIcon from "@mui/icons-material/Handshake"
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings"
-import MenuIcon from "@mui/icons-material/Menu"
+import {
+  AccountBox,
+  Flag,
+  SportsFootball,
+  Handshake,
+  AdminPanelSettings,
+  Menu,
+} from "@mui/icons-material"
 import keycloak from "../../keycloak"
 
+//Page Names for the list
 const pages = ["Profile", "Goal", "Exercise"]
-const listIcon = [
-  <ProfileIcon />,
-  <GoalIcon />,
-  <ExerciseIcon />,
-]
+//Icon the list
+const listIcon = [<AccountBox />, <Flag />, <SportsFootball />]
+//routes for the List
 const routes = ["/profile", "/goaldashboard", "/exercise"]
+
+//Local State
 const DrawerComponent = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
 
@@ -55,7 +58,7 @@ const DrawerComponent = () => {
               onClick={() => setOpenDrawer(false)}
             >
               <ListItemIcon>
-                <HandshakeIcon />
+                <Handshake />
                 <ListItemText>Contributor</ListItemText>
               </ListItemIcon>
             </ListItemButton>
@@ -67,7 +70,7 @@ const DrawerComponent = () => {
               onClick={() => setOpenDrawer(false)}
             >
               <ListItemIcon>
-                <AdminPanelSettingsIcon />
+                <AdminPanelSettings />
                 <ListItemText>Admin</ListItemText>
               </ListItemIcon>
             </ListItemButton>
@@ -78,7 +81,7 @@ const DrawerComponent = () => {
         sx={{ color: "white", marginLeft: "auto" }}
         onClick={() => setOpenDrawer(!openDrawer)}
       >
-        <MenuIcon color="white" />
+        <Menu color="white" />
       </IconButton>
     </React.Fragment>
   )

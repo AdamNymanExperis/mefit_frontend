@@ -7,13 +7,17 @@ import { postWorkoutExercise } from "../../api/workoutExercise"
 import keycloak from "../../keycloak"
 
 function ContributorCreateWorkout(props) {
+  //Local State for new Workout
   let [name, setName] = useState(null)
   let [type, setType] = useState(null)
   let [exerciseRows, setExerciseRows] = useState([])
   let [selectedExercise, setSelectedExercise] = useState([])
+
+  //WorkoutExerciseData and Ids that needs to be saved
   let workoutExerciseData = []
   let workoutExerciseid = []
 
+  //columns for Exercise
   const columns = [
     { field: "Id", headerName: "ID", width: 90 },
     { field: "name", headerName: "Name", width: 150 },
@@ -21,10 +25,10 @@ function ContributorCreateWorkout(props) {
     {
       field: "targetMuscleGroup",
       headerName: "Target Muscle Groupe",
-      width: 150,
+      width: 300,
     },
   ]
-
+  //get all exercise
   const callApiForExercises = async () => {
     const [error, data] = await getExercises()
     setExerciseRows(data)
@@ -33,10 +37,12 @@ function ContributorCreateWorkout(props) {
     }
   }
 
+  //Side effect
   useEffect(() => {
     callApiForExercises()
   }, [])
 
+  //save the new Workout
   const SaveWorkout = async () => {
     props.setSaveMessage(null)
     const workout = {

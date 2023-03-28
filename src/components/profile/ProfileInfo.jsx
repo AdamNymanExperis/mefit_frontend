@@ -13,7 +13,10 @@ import ImpairmentListItem from "../impairments/ImpairmentListItem"
 import { useEffect, useState } from "react"
 
 function ProfileInfo(props) {
+  //Local State
   const [currentGoals, setCurrentGoals] = useState([])
+
+  //Side Effect
   useEffect(() => {
     setCurrentGoals(
       props.userProfile.goals.map((x) =>

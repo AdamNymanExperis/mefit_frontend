@@ -27,7 +27,7 @@ function ContributorControl(props) {
               },
               marginTop: 2,
             }}
-            onClick={() => props.setActiveProfileCard("CreateExercise")}
+            onClick={() => props.setActiveContributorCard("CreateExercise")}
           >
             Exercise
           </Button>
@@ -41,7 +41,7 @@ function ContributorControl(props) {
               marginTop: 2,
               marginLeft: 2,
             }}
-            onClick={() => props.setActiveProfileCard("CreateWorkout")}
+            onClick={() => props.setActiveContributorCard("CreateWorkout")}
           >
             Workout
           </Button>

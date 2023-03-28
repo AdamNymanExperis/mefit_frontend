@@ -7,14 +7,22 @@ import { getImpairments } from "../../api/impairment"
 import { updateImpairmentsIntoProfile } from "../../api/profile"
 
 function ImpairmentEdit(props) {
+  //Local State
   const [impairmentRows, setImpairmentRows] = useState([])
   const [currentImpairments, setCurrentImpairments] = useState([])
+
+  //Columns for the Datagrid
   const columns = [
     { field: "Id", headerName: "ID", width: 90 },
     { field: "name", headerName: "Name", width: 150 },
-    { field: "description", headerName: "Description", width: 150 },
+    {
+      field: "description",
+      headerName: "Description",
+      width: 350,
+    },
   ]
 
+  //save the impairment to profile
   const SaveImpairments = async (impairments) => {
     await updateImpairmentsIntoProfile(
       keycloak.token,
@@ -24,6 +32,7 @@ function ImpairmentEdit(props) {
     props.goBackToProfileAndUpdateData()
   }
 
+  //side effect
   useEffect(() => {
     const callApiForImpairments = async () => {
       const [error, data] = await getImpairments()
