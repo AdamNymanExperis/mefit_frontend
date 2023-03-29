@@ -17,6 +17,12 @@ The project is deployed on the following url: [MeFit Application](https://mefit-
 # Running the application
 To run the application as a localhost you only need to have nodejs installed. Download nodejs. Once node is installed, you can download this git repository and navigate to the project folder using a commandline (such as cmd, powershell, or bash) then run "npm install", followed by "npm start". the application should now start in your webbrowser.
 
+# KeyCloak
+Before Starting the application you need to set up your keycloak. You can do it by using the following url [Cloud-IAM](https://www.cloud-iam.com)
+
+# KeyCloak Configuration
+After setting up your Keycloak server, you must copy the JSON configuration from the Admin panel. Replace the content in the public/keycloak.json file before you start. You can Find your Json Configuration in you KeyCloak Client by clicking Download adaptor configs
+
 # Technology used
 React, KeyCloak
 
