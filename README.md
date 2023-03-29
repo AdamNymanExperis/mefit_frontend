@@ -4,6 +4,8 @@ This project is for the Case Study at Experis Academy. Its a Fitness Application
 
 Mefit is an app where user can set up weekly goals and track them. User will also be provided with exercises. The application serves to motivate the user to become fit by tracking their goal and exercise regime.
 
+A user manual for how to use the application can be found [here.](https://github.com/AdamNymanExperis/mefit_frontend/blob/master/User%20Manual%20of%20Me-Fit.pdf)
+
 # Backend And Frontend
 the backend for this project is build i C# and SQL Server for the Database, while Frontend is build in React.js
 
