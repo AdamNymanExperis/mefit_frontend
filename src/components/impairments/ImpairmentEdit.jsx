@@ -47,7 +47,6 @@ function ImpairmentEdit(props) {
 				parseInt(x.substring(x.lastIndexOf("/") + 1))
 			)
 		);
-		console.log(currentImpairments);
 	}, [props]);
 
 	if (impairmentRows === undefined) return <CircularProgress />;
